@@ -1,19 +1,27 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import LandingPage from './views/LandingPage.vue'
+import Dashboard from './views/Dashboard.vue'
 
-import LandingPage from './views/LandingPage.vue';
-import Dashboard from './views/Dashboard.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        component: LandingPage
+        name: 'LandingPage',
+        component: LandingPage,
+        meta: {
+            visible: true,
+        }
     },
     {
         path: '/dashboard',
-        component: Dashboard
+        name: 'Dashboard',
+        component: Dashboard,
+        meta: {
+            visible: true,
+        }
     }
 ];
 
