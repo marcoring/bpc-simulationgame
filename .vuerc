@@ -1,0 +1,4 @@
+{
+  "useTaobaoRegistry": true,
+  devtool: 'source-map',
+}

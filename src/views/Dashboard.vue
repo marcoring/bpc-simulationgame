@@ -1,17 +1,5 @@
 <template>
   <v-app id="dashboard">
-    <!-- Burger-Menu -->
-    <v-navigation-drawer permanent expand-on-hover fixed>
-      <v-list v-for="element in progressElements" :key="element.id" nav dense>
-        <v-list-item :id="element.id" :value="element.value" link>
-          <v-list-item-icon>
-            <v-icon>{{ element.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>{{ element.name }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-container>
       <!-- Header -->
       <v-row class="pa-3 text-left">
@@ -75,9 +63,10 @@
       <v-row class="pa-6 text-left">
         <h2>Round {{ round }}</h2>
         <v-progress-linear
+          style="border-radius: 10px"
           color="light-green darken-4"
           height="20"
-          v-model="calculateProgress"
+          :value="calculateProgress"
           rounded
           striped
         >
@@ -91,28 +80,32 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-progress-circular
+                v-show="element.requiredRound <= round"
+                :round="round"
                 :id="element.id"
                 :width="15"
                 :rotate="-90"
                 :size="100"
                 :value="element.value"
+                @click="$router.push(element.id)"
+                style="cursor: pointer;"
                 color="teal"
                 v-bind="attrs"
                 v-on="on"
               >
-                {{ element.icon }}
+                <v-icon color="teal" large>{{ element.icon }}</v-icon>
               </v-progress-circular>
             </template>
             <span>{{ element.value }}</span>
           </v-tooltip>
-          <h3>{{ element.name }}</h3>
+          <h3 v-show="element.requiredRound <= round">{{ element.name }}</h3>
         </v-col>
       </v-row>
 
       <!-- Cards -->
       <v-row class="pa-6 text-left">
         <v-col>
-          <v-card>
+          <v-card rounded>
             <v-card-title>Cost accounting</v-card-title>
             <v-card-text>
               <p>Budget (EUR): 100.000,00</p>
@@ -125,7 +118,7 @@
           </v-card>
         </v-col>
         <v-col>
-          <v-card>
+          <v-card rounded>
             <v-card-title>Rules Round {{ round }}</v-card-title>
             <v-card-text>
               <p>
@@ -150,53 +143,6 @@
           </v-card>
         </v-col>
       </v-row>
-
-      <!-- Dialog for Each New Round -->
-      <v-dialog v-model="newRoundDialog" persistent width="80%">
-        <template v-slot:activator="{ on, attrs }" v-bind="attrs" v-on="on" />
-
-        <v-card>
-          <v-card-title class="headline grey lighten-2">
-            Round {{ round }}
-
-            <v-spacer />
-
-            <v-img :src="require('@/assets/logo.png')" max-width="100px" />
-          </v-card-title>
-
-          <v-card-text>
-            <p><u>Rules:</u></p>
-            <p>IoT bikes are an innovation.</p>
-            <p>
-              And they are not very popular yet. The current demand on the whole
-              market is 1.000 bikes.
-            </p>
-            <p>
-              <u>Round {{ round }} Settings:</u>
-            </p>
-            <p>Only standard bikes are available (frame + 10 sensors)</p>
-            <p>Following decisions can be made:</p>
-            <ul>
-              <li>
-                Purchaising process: an initial vendor selection has to be made.
-              </li>
-              <li>
-                Sales process: there is an option for an online shop boosts the
-                sales numbers
-              </li>
-            </ul>
-          </v-card-text>
-
-          <v-divider />
-
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="primary" text @click="newRoundDialog = false">
-              Go to Dashboard
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-container>
   </v-app>
 </template>
@@ -205,95 +151,67 @@
 export default {
   data() {
     return {
-      teamName: "Team Name",
-      round: 1,
-      progressElements: [
-        {
-          id: "purchaising",
-          name: "Purchaising",
-          value: 100,
-          icon: "mdi-pine-tree",
-        },
-        {
-          id: "logistics",
-          name: "Logistics",
-          value: 90,
-          icon: "mdi-folder",
-        },
-        {
-          id: "framePreparation",
-          name: "Frame Preparation",
-          value: 80,
-          icon: "mdi-account-multiple",
-        },
-        {
-          id: "sensorsPreparation",
-          name: "Sensors Preparation",
-          value: 70,
-          icon: "mdi-star",
-        },
-        {
-          id: "enginePreparation",
-          name: "Engine Preparation",
-          value: 60,
-          icon: "mdi-account",
-        },
-        {
-          id: "batteryPreparation",
-          name: "Battery Preparation",
-          value: 50,
-          icon: "mdi-battery-charging",
-        },
-        {
-          id: "bikeConstruction",
-          name: "Bike Construction",
-          value: 40,
-          icon: "mdi-account",
-        },
-        {
-          id: "appDevAndMaintenance",
-          name: "Application Development and Maintenance",
-          value: 30,
-          icon: "mdi-account",
-        },
-        {
-          id: "qa",
-          name: "Quality Assurance",
-          value: 15,
-          icon: "mdi-account",
-        },
-        {
-          id: "sales",
-          name: "Sales",
-          value: 1,
-          icon: "mdi-sale",
-        },
-      ],
       endRoundDialog: false,
-      newRoundDialog: false,
     };
   },
   methods: {
     endRound() {
-      console.log("End Round");
-    },
-    newRoundRules() {
-      console.log("New Round");
-      this.newRoundDialog = true;
+      console.log("End of Round #" + this.round);
+      /*
+        Future Work:
+        enable connection with ABAP-server and send
+        post-request about current round-ending.
+      */
+      if (this.round >= 6) {
+        // End Game
+        this.$emit("roundUpdate", 1);
+        console.log("End Game");
+      } else {
+        this.$emit("roundUpdate", ++this.round);
+      }
     },
   },
   computed: {
     calculateProgress() {
+      const prEl = this.progressElements;
       var sum = 0;
-      for (var i = 0; i < this.progressElements.length; i++) {
-        sum += this.progressElements[i].value;
+      var stepsNumber = 0;
+      var isPrElAllowed = false;
+      for (var i = 0; i < prEl.length; i++) {
+        isPrElAllowed = this.round >= prEl[i].requiredRound;
+        sum += isPrElAllowed ? prEl[i].value : 0;
+        stepsNumber += isPrElAllowed ? 1 : 0;
       }
-      return Math.ceil(sum / this.progressElements.length);
+      return Math.ceil(sum / stepsNumber);
+    },
+    determineStepsNumber() {
+      /*
+        In each new round (totally 6) user
+        gets some new production-steps
+      */
+      switch (this.round) {
+        case 1:
+          // (Purchaising, Logistics, Frame Preparation, Sensors Preparation, Bike Construction, Sales)
+          return 6;
+        case 2:
+          // + (Battery Preparation, Quality Assurance)
+          return 8;
+        case 3:
+          // + (Engine Preparation)
+          return 9;
+        case (4, 5, 6):
+          // + (Application Development and Maintenance)
+          return 10;
+        default:
+          // invalid case
+          return 0;
+      }
     },
   },
-  mounted() {
-    console.log("mounted");
-    this.newRoundRules();
+  props: {
+    round: Number,
+    progressElements: Array,
+    teamName: String,
   },
 };
 </script>
