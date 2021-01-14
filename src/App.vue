@@ -2,7 +2,13 @@
   <v-app>
     <v-main>
       <!-- Burger-Menu -->
-      <v-navigation-drawer app permanent expand-on-hover fixed>
+      <v-navigation-drawer
+        v-if="currentRouteName !== 'LandingPage'"
+        app
+        permanent
+        expand-on-hover
+        fixed
+      >
         <v-list-item to="dashboard">
           <v-list-item-icon>
             <v-icon>mdi-view-dashboard-outline</v-icon>
@@ -37,6 +43,132 @@
         </v-list-item>
       </v-navigation-drawer>
 
+      <!-- Header -->
+      <v-row v-if="currentRouteName !== 'LandingPage'" class="pa-3 text-left">
+        <v-col>
+          <h1>{{ currentRouteName }}</h1>
+          <h3>{{ teamName }}</h3>
+        </v-col>
+        <v-img
+          :src="require('@/assets/logo.png')"
+          max-width="100px"
+          class="mx-auto justify-left"
+          @click="openSecretDialog"
+        />
+
+        <v-spacer />
+
+        <!-- Button (End-Round: for Dashboard-view and Go-Back for other) -->
+        <v-dialog
+          v-if="currentRouteName === 'Dashboard'"
+          v-model="endRoundDialog"
+          persistent
+          width="50%"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn rounded color="primary" dark v-bind="attrs" v-on="on">
+              End Round
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title class="headline grey lighten-2">
+              Round {{ round }}
+            </v-card-title>
+
+            <v-card-text>
+              <p>Do you really want to end the current round?</p>
+              <p>
+                You won't be able to make any changes until the next round has
+                started!
+              </p>
+            </v-card-text>
+
+            <v-divider />
+
+            <v-card-actions>
+              <v-spacer />
+              <v-btn color="red lighten-2" text @click="endRoundDialog = false">
+                Go Back
+              </v-btn>
+
+              <v-btn
+                color="primary"
+                text
+                @click="
+                  endRoundDialog = false;
+                  endRound();
+                "
+              >
+                End Round
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <!-- Go-Back (to Dashboard) Button for all components-views -->
+        <v-btn
+          v-if="currentRouteName !== 'Dashboard'"
+          rounded
+          color="primary"
+          dark
+          @click="redirectToDashboard"
+        >
+          Go Back to Dashboard
+        </v-btn>
+      </v-row>
+
+      <!-- Statistic about current and previous round -->
+      <v-row
+        v-if="
+          currentRouteName !== 'LandingPage' && currentRouteName !== 'Dashboard'
+        "
+      >
+        <v-col>
+          <!-- Previous Round Data -->
+          <v-card>
+            <v-card-title>
+              Previous Round Data
+              <v-spacer />
+              <v-text-field
+                v-model="searchPrevRound"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              :headers="headersRound"
+              :items="dataPrevRound"
+              :search="searchPrevRound"
+            />
+          </v-card>
+        </v-col>
+
+        <v-col>
+          <!-- Current Round Data -->
+          <v-card>
+            <v-card-title>
+              Current Round Data
+              <v-spacer />
+              <v-text-field
+                v-model="searchCurRound"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              :headers="headersRound"
+              :items="dataCurrentRound"
+              :search="searchCurRound"
+            />
+          </v-card>
+        </v-col>
+      </v-row>
+
       <!-- Router (and values as props to pass them to child) -->
       <router-view
         :round="round"
@@ -46,7 +178,12 @@
       />
 
       <!-- Dialog with Rules for Each New Round -->
-      <v-dialog v-model="rulesDialog" persistent width="80%">
+      <v-dialog
+        v-if="!(currentRouteName === 'LandingPage')"
+        v-model="rulesDialog"
+        persistent
+        width="80%"
+      >
         <template v-slot:activator="{ on, attrs }" v-bind="attrs" v-on="on" />
 
         <v-card>
@@ -91,6 +228,30 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <!-- Easter-egg secret Dialog -->
+      <v-dialog v-model="secretDialog" persistent width="50%">
+        <template v-slot:activator="{ on, attrs }" v-bind="attrs" v-on="on" />
+
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Congratulations! You have found secret Dialog!
+          </v-card-title>
+
+          <v-card-text>
+            <h2>© Technical University Munich (TUM)</h2>
+          </v-card-text>
+
+          <v-divider />
+
+          <v-card-actions>
+            <v-spacer />
+            <v-btn color="primary" text @click="secretDialog = false">
+              Close Dialog
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -103,6 +264,8 @@ export default {
       teamName: "Buy Cycle @TUM-team",
       round: 1,
       rulesDialog: false,
+      endRoundDialog: false,
+      secretDialog: false,
       progressElements: [
         {
           id: "purchaising",
@@ -175,18 +338,93 @@ export default {
           requiredRound: 1,
         },
       ],
+      // for components-views: tables with current and previous round statistic
+      searchPrevRound: "",
+      searchCurRound: "",
+      headersRound: [
+        { text: "Material", value: "material" },
+        { text: "Vendor", value: "vendor" },
+        { text: "Quality (%)", value: "quality" },
+        { text: "Amount (PC)", value: "amount" },
+        { text: "Total Cost (EUR)", value: "totalCost" },
+        { text: "Cumulative Stock", value: "cumulativeStock" },
+      ],
+      dataPrevRound: [
+        {
+          material: "Battery",
+          vendor: "ElectricRider",
+          quality: "12.00",
+          amount: "3",
+          totalCost: "1192.80",
+          cumulativeStock: "53",
+        },
+        {
+          material: "Engine",
+          vendor: "ElectricRider",
+          quality: "12.00",
+          amount: "4",
+          totalCost: "470.40",
+          cumulativeStock: "44",
+        },
+      ],
+      dataCurrentRound: [
+        {
+          material: "Frame",
+          vendor: "ElectricRider",
+          quality: "21.00",
+          amount: "3",
+          totalCost: "231.90",
+          cumulativeStock: "23",
+        },
+        {
+          material: "Engine",
+          vendor: "ElectricRider",
+          quality: "8.00",
+          amount: "10",
+          totalCost: "2333.00",
+          cumulativeStock: "77",
+        },
+      ],
     };
   },
   methods: {
+    openSecretDialog() {
+      console.log("Easter egg!");
+      this.secretDialog = true;
+    },
     roundUpdate(value) {
+      console.log("Round-update");
       this.round = value;
     },
     newRoundRules() {
       console.log("New Round Rules");
       this.rulesDialog = true;
     },
+    endRound() {
+      console.log("End of Round #" + this.round);
+      /*
+        Future Work:
+        enable connection with ABAP-server and send
+        post-request about current round-ending.
+      */
+      if (this.round >= 6) {
+        // End Game
+        this.$emit("roundUpdate", 1);
+        console.log("End Game");
+      } else {
+        this.$emit("roundUpdate", ++this.round);
+      }
+    },
+    redirectToDashboard() {
+      console.log("redirect to Dashboard");
+      this.$router.push({ path: "/dashboard" });
+    },
   },
-  components: {},
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    },
+  },
   mounted() {
     console.log("mounted");
     this.newRoundRules();

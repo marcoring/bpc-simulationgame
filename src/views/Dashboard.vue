@@ -1,64 +1,6 @@
 <template>
   <v-app id="dashboard">
     <v-container>
-      <!-- Header -->
-      <v-row class="pa-3 text-left">
-        <v-col>
-          <h1>Dashboard</h1>
-          <h3>{{ teamName }}</h3>
-        </v-col>
-        <v-img
-          :src="require('@/assets/logo.png')"
-          max-width="100px"
-          class="mx-auto justify-left"
-        />
-
-        <v-spacer />
-
-        <!-- End-Round Button with Dialog-Call -->
-        <v-dialog v-model="endRoundDialog" persistent width="50%">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn rounded color="primary" dark v-bind="attrs" v-on="on">
-              End Round
-            </v-btn>
-          </template>
-
-          <v-card>
-            <v-card-title class="headline grey lighten-2">
-              Round {{ round }}
-            </v-card-title>
-
-            <v-card-text>
-              <p>Do you really want to end the current round?</p>
-              <p>
-                You won't be able to make any changes until the next round has
-                started!
-              </p>
-            </v-card-text>
-
-            <v-divider />
-
-            <v-card-actions>
-              <v-spacer />
-              <v-btn color="red lighten-2" text @click="endRoundDialog = false">
-                Go Back
-              </v-btn>
-
-              <v-btn
-                color="primary"
-                text
-                @click="
-                  endRoundDialog = false;
-                  endRound();
-                "
-              >
-                End Round
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-
       <!-- Linear Progress-Bar -->
       <v-row class="pa-6 text-left">
         <h2>Round {{ round }}</h2>
@@ -150,27 +92,9 @@
 <script>
 export default {
   data() {
-    return {
-      endRoundDialog: false,
-    };
+    return {};
   },
-  methods: {
-    endRound() {
-      console.log("End of Round #" + this.round);
-      /*
-        Future Work:
-        enable connection with ABAP-server and send
-        post-request about current round-ending.
-      */
-      if (this.round >= 6) {
-        // End Game
-        this.$emit("roundUpdate", 1);
-        console.log("End Game");
-      } else {
-        this.$emit("roundUpdate", ++this.round);
-      }
-    },
-  },
+  methods: {},
   computed: {
     calculateProgress() {
       const prEl = this.progressElements;
