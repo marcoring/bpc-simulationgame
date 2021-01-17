@@ -33,17 +33,14 @@
 
         <v-col>
           <!-- Cost Accounting -->
-          <v-card>
-            <v-card-title>Cost Accounting</v-card-title>
-            <v-card-text>
-              <p>Budget (EUR): {{ budget }}</p>
-              <p>Running costs (EUR): {{ runningCosts }}</p>
-              <p>Avg. Prod. Cost per Bike (EUR): {{ avgProdCostBike }}</p>
-              <p>Estimated Quality: {{ estimatedQual }}</p>
-              <p>Max. Production Capacity (PC): {{ maxProdCapac }}</p>
-              <p>Overall Demand (PC): {{ overDemand }}</p>
-            </v-card-text>
-          </v-card>
+          <cost-accounting-card
+            :budget="10.0"
+            :runningCosts="222.222"
+            :avgProdCostBike="'Incomplete'"
+            :estimatedQual="21.29"
+            :maxProdCapac="'Incomplete'"
+            :overDemand="40000.0"
+          />
         </v-col>
       </v-row>
 
@@ -65,8 +62,10 @@
 </template>
 
 <script>
+import costAccountingCard from "../components/costAccountingCard";
 export default {
   name: "logistics",
+  components: { costAccountingCard },
   data() {
     return {
       prevTranspComp: "Ebike GmBh",

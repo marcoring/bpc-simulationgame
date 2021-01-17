@@ -47,17 +47,14 @@
       <!-- Cards -->
       <v-row class="pa-6 text-left">
         <v-col>
-          <v-card rounded>
-            <v-card-title>Cost accounting</v-card-title>
-            <v-card-text>
-              <p>Budget (EUR): 100.000,00</p>
-              <p>Running costs (EUR): 222.222,22</p>
-              <p>Avg.Prod.Cost per Bike (EUR): Incomplete</p>
-              <p>Estimated Quality: 21.29</p>
-              <p>Max.Production Capacity (PC): Incomplete</p>
-              <p>Overall Demand (PC): 40000.00</p>
-            </v-card-text>
-          </v-card>
+          <cost-accounting-card
+            :budget="10.0"
+            :runningCosts="222.222"
+            :avgProdCostBike="'Incomplete'"
+            :estimatedQual="21.29"
+            :maxProdCapac="'Incomplete'"
+            :overDemand="40000.0"
+          />
         </v-col>
         <v-col>
           <v-card rounded>
@@ -90,7 +87,9 @@
 </template>
 
 <script>
+import costAccountingCard from "../components/costAccountingCard.vue";
 export default {
+  components: { costAccountingCard },
   data() {
     return {};
   },

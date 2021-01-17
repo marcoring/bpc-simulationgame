@@ -43,17 +43,14 @@
 
         <v-col>
           <!-- Cost Accounting -->
-          <v-card>
-            <v-card-title>Cost Accounting</v-card-title>
-            <v-card-text>
-              <p>Budget (EUR): {{ budget }}</p>
-              <p>Running costs (EUR): {{ runningCosts }}</p>
-              <p>Avg. Prod. Cost per Bike (EUR): {{ avgProdCostBike }}</p>
-              <p>Estimated Quality: {{ estimatedQual }}</p>
-              <p>Max. Production Capacity (PC): {{ maxProdCapac }}</p>
-              <p>Overall Demand (PC): {{ overDemand }}</p>
-            </v-card-text>
-          </v-card>
+          <cost-accounting-card
+            :budget="budget"
+            :runningCosts="runningCosts"
+            :avgProdCostBike="avgProdCostBike"
+            :estimatedQual="estimatedQual"
+            :maxProdCapac="maxProdCapac"
+            :overDemand="overDemand"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -61,8 +58,10 @@
 </template>
 
 <script>
+import costAccountingCard from "./costAccountingCard";
 export default {
   name: "prev-cur-round-stats",
+  components: { costAccountingCard },
   props: {
     prevAsmLine: {
       type: String,
