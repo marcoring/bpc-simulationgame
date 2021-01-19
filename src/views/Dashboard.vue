@@ -6,8 +6,8 @@
         <h2>Round {{ round }}</h2>
         <v-progress-linear
           style="border-radius: 10px"
-          color="light-green darken-4"
-          height="20"
+          color="#4E9455"
+          height="30"
           :value="calculateProgress"
           rounded
           striped
@@ -31,11 +31,11 @@
                 :value="element.value"
                 @click="$router.push(element.id)"
                 style="cursor: pointer;"
-                color="teal"
+                color="#4E9455"
                 v-bind="attrs"
                 v-on="on"
               >
-                <v-icon color="teal" large>{{ element.icon }}</v-icon>
+                <v-icon color="black" large>{{ element.icon }}</v-icon>
               </v-progress-circular>
             </template>
             <span>{{ element.value }}</span>
