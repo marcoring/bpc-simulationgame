@@ -159,7 +159,7 @@
             <p>Following decisions can be made:</p>
             <ul>
               <li>
-                Purchaising process: an initial vendor selection has to be made.
+                Purchasing process: an initial vendor selection has to be made.
               </li>
               <li>
                 Sales process: there is an option for an online shop boosts the
@@ -218,73 +218,73 @@ export default {
       secretDialog: false,
       progressElements: [
         {
-          id: "purchaising",
-          name: "Purchaising",
+          id: "purchasing",
+          name: "Purchasing",
           value: 99,
-          icon: "mdi-pine-tree",
+          icon: "mdi-shopping-outline",
           requiredRound: 1,
         },
         {
           id: "logistics",
           name: "Logistics",
           value: 99,
-          icon: "mdi-pine-tree",
+          icon: "mdi-truck",
           requiredRound: 1,
         },
         {
           id: "framePreparation",
           name: "Frame Preparation",
           value: 99,
-          icon: "mdi-pine-tree",
+          icon: "mdi-bicycle",
           requiredRound: 1,
         },
         {
           id: "sensorsPreparation",
           name: "Sensors Preparation",
           value: 99,
-          icon: "mdi-pine-tree",
+          icon: "mdi-chip",
           requiredRound: 1,
         },
         {
           id: "enginePreparation",
           name: "Engine Preparation",
           value: 0,
-          icon: "mdi-pine-tree",
+          icon: "mdi-pac-man",
           requiredRound: 3,
         },
         {
           id: "batteryPreparation",
           name: "Battery Preparation",
           value: 0,
-          icon: "mdi-pine-tree",
+          icon: "mdi-battery-charging-high",
           requiredRound: 2,
         },
         {
           id: "bikeConstruction",
           name: "Bike Construction",
           value: 99,
-          icon: "mdi-pine-tree",
+          icon: "mdi-tools",
           requiredRound: 1,
         },
         {
           id: "appDevAndMaintenance",
           name: "Application Development and Maintenance",
           value: 0,
-          icon: "mdi-pine-tree",
+          icon: "mdi-cellphone",
           requiredRound: 4,
         },
         {
           id: "qualityAssurance",
           name: "Quality Assurance",
           value: 0,
-          icon: "mdi-pine-tree",
+          icon: "mdi-quality-high",
           requiredRound: 2,
         },
         {
           id: "sales",
           name: "Sales",
           value: 99,
-          icon: "mdi-pine-tree",
+          icon: "mdi-currency-eur",
           requiredRound: 1,
         },
       ],

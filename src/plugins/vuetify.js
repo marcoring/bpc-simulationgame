@@ -11,8 +11,8 @@ Vue.use(Vuetify);
 const theme = {
     primary: '#4E9455',
     /* green, as on logo */
-    secondary: '#4E9455',
-    accent: '#4E9455',
+    secondary: '#4E9356,',
+    accent: '#9FE3AC',
     error: '#4E9455',
     info: '#4E9455',
     success: '#4E9455',
