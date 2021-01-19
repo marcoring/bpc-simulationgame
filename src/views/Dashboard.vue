@@ -114,7 +114,7 @@ export default {
       */
       switch (this.round) {
         case 1:
-          // (Purchaising, Logistics, Frame Preparation, Sensors Preparation, Bike Construction, Sales)
+          // (Purchasing, Logistics, Frame Preparation, Sensors Preparation, Bike Construction, Sales)
           return 6;
         case 2:
           // + (Battery Preparation, Quality Assurance)

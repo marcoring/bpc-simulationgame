@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LandingPage from './views/LandingPage.vue'
 import Dashboard from './views/Dashboard.vue'
-import Purchaising from './views/Purchaising.vue';
+import Purchasing from './views/Purchasing.vue';
 import Logistics from './views/Logistics.vue';
 import FramePreparation from './views/FramePreparation.vue';
 import SensorsPreparation from './views/SensorsPreparation.vue';
@@ -33,9 +33,9 @@ const routes = [{
         }
     },
     {
-        path: '/purchaising',
-        name: 'Purchaising',
-        component: Purchaising,
+        path: '/purchasing',
+        name: 'Purchasing',
+        component: Purchasing,
         meta: {
             visible: true,
         }
