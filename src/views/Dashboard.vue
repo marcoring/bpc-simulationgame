@@ -18,11 +18,10 @@
 
       <!-- Circular Progress-Bars with Pop-Overs -->
       <v-row class="pa-10 text-center">
-        <v-col v-for="element in progressElements" :key="element.id">
+        <v-col v-for="element in calculatedProgressElements" :key="element.id">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-progress-circular
-                v-show="element.requiredRound <= round"
                 :round="round"
                 :id="element.id"
                 :width="15"
@@ -95,6 +94,9 @@ export default {
   },
   methods: {},
   computed: {
+    calculatedProgressElements(){
+      return this.progressElements.filter(element => element.requiredRound <= this.round);
+    },
     calculateProgress() {
       const prEl = this.progressElements;
       var sum = 0;
