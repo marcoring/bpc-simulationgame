@@ -118,13 +118,17 @@
         </v-btn>
       </v-row>
 
+      <!-- ******************************************************************************************* -->
+
       <!-- Router (and values as props to pass them to child) -->
       <router-view
         :round="round"
         :teamName="teamName"
         :progressElements="progressElements"
-        @roundUpdate="roundUpdate"
+        @teamSelected="setTeam"
       />
+
+      <!-- ******************************************************************************************* -->
 
       <!-- Dialog with Rules for Each New Round -->
       <v-dialog
@@ -211,7 +215,8 @@ export default {
   name: "App",
   data() {
     return {
-      teamName: "Buy Cycle @TUM-team",
+      teamName: "",
+      teamColor: "",
       round: 1,
       rulesDialog: false,
       endRoundDialog: false,
@@ -328,13 +333,17 @@ export default {
     };
   },
   methods: {
+    setTeam(name, color) {
+      this.teamName = name;
+      this.teamColor = color;
+    },
     openSecretDialog() {
       console.log("Easter egg!");
       this.secretDialog = true;
     },
-    roundUpdate(value) {
+    roundUpdate(round) {
       console.log("Round-update");
-      this.round = value;
+      this.round = round;
     },
     newRoundRules() {
       console.log("New Round Rules");
@@ -349,10 +358,10 @@ export default {
       */
       if (this.round >= 6) {
         // End Game
-        this.$emit("roundUpdate", 1);
+        this.roundUpdate(1);
         console.log("End Game");
       } else {
-        this.$emit("roundUpdate", ++this.round);
+        this.roundUpdate(++this.round);
       }
     },
     redirectToDashboard() {

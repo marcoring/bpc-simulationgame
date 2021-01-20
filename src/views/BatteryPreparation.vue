@@ -1,6 +1,6 @@
 <template>
   <v-app id="battery-preparation">
-    <v-container v-if="round >= 3">
+    <v-container v-if="round >= 2">
       <!-- custom component with statistic about current, previous round and cost accounting -->
       <prev-cur-round-stats
         :prevAsmLine="'SmartLine'"

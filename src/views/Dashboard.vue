@@ -92,10 +92,11 @@ export default {
   data() {
     return {};
   },
-  methods: {},
   computed: {
-    calculatedProgressElements(){
-      return this.progressElements.filter(element => element.requiredRound <= this.round);
+    calculatedProgressElements() {
+      return this.progressElements.filter(
+        (element) => element.requiredRound <= this.round
+      );
     },
     calculateProgress() {
       const prEl = this.progressElements;
