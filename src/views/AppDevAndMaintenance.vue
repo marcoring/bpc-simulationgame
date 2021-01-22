@@ -2,7 +2,7 @@
   <v-app id="app-dev-and-maintenance">
     <v-container v-if="round >= 4">
       <!-- Statistic about current, previous round and cost accounting -->
-      <v-row>
+      <v-row style="height: 400px;">
         <v-col>
           <!-- Previous Round Status -->
           <v-card>
@@ -44,21 +44,41 @@
         </v-col>
       </v-row>
 
+      <v-divider />
+
       <!-- Managing Application development and maintenance process -->
       <v-row style="margin-top: 10px;">
         <h2 style="text-align: left;">
           Manage application development and maintenance process
         </h2>
+      </v-row>
+      <v-row>
         <v-col>
-          <!-- -->
-          <v-card></v-card>
+          <v-select
+            v-model="selectedCompany"
+            :items="outsourcCompany"
+            label="Choose assembly line..."
+            item-text="name"
+          />
         </v-col>
 
         <v-col>
-          <!-- -->
-          <v-card></v-card>
+          <v-text-field
+            label="Application costs (EUR)"
+            v-model="selectedCompany[0]"
+            filled
+            disabled
+          />
+          <v-text-field
+            label="Application quality (%)"
+            v-model="selectedCompany[1]"
+            filled
+            disabled
+          />
         </v-col>
       </v-row>
+
+      <confirmation-dialog />
     </v-container>
     <v-container v-else>
       <h1>Hey, url-hacker, you have no access to this component yet!!</h1>
@@ -69,9 +89,25 @@
 
 <script>
 import costAccountingCard from "../components/costAccountingCard";
+import confirmationDialog from "../components/confirmationDialog.vue";
 export default {
   name: "AppDevAndMaintanance",
-  components: { costAccountingCard },
+  components: { costAccountingCard, confirmationDialog },
+  data() {
+    return {
+      selectedCompany: "",
+      outsourcCompany: [
+        {
+          name: "Company 1",
+          value: ["450", "80"],
+        },
+        {
+          name: "Company 2",
+          value: ["580", "95"],
+        },
+      ],
+    };
+  },
   props: {
     round: {
       type: Number,

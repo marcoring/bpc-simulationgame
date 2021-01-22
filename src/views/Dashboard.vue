@@ -57,27 +57,11 @@
         </v-col>
         <v-col>
           <v-card rounded>
-            <v-card-title>Rules Round {{ round }}</v-card-title>
-            <v-card-text>
-              <p>
-                IoT bikes are innovation. And they are not very popular yet. The
-                current demand of the Whole market is 1.000 bikes.
-              </p>
-              <p>
-                Round 1: Only standard bikes are available (frame + 10 sensors).
-              </p>
-              <p>Following decisions can be made:</p>
-              <ul>
-                <li>
-                  Purchasing process: An initial vendor selection has to be
-                  made.
-                </li>
-                <li>
-                  Sales process: There is an option for an Online shop which
-                  boosts the sales numbers.
-                </li>
-              </ul>
-            </v-card-text>
+            <roundRules
+              :generalRules="false"
+              :headerImage="false"
+              :round="round"
+            />
           </v-card>
         </v-col>
       </v-row>
@@ -87,8 +71,9 @@
 
 <script>
 import costAccountingCard from "../components/costAccountingCard.vue";
+import roundRules from "../components/roundRules.vue";
 export default {
-  components: { costAccountingCard },
+  components: { costAccountingCard, roundRules },
   data() {
     return {};
   },

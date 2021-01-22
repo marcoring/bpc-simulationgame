@@ -25,34 +25,116 @@
         :estimatedQual="0.0"
         :maxProdCapac="'Incomplete'"
         :overDemand="40000.0"
+        style="height: 500px;"
       />
+
+      <v-divider />
 
       <!-- Managing bike construction process -->
       <v-row style="margin-top: 10px;">
         <h2 style="text-align: left;">
           Manage bike construction preparation process
         </h2>
+      </v-row>
+      <v-row>
         <v-col>
-          <!-- -->
-          <v-card></v-card>
+          <v-select
+            v-model="selectedLine"
+            :items="assemblyLines"
+            label="Choose assembly line..."
+            item-text="name"
+          />
+
+          <v-text-field
+            label="Assembly costs (EUR)"
+            v-model="selectedLine[0]"
+            filled
+            disabled
+          />
+          <v-text-field
+            label="Production costs (EUR)"
+            v-model="selectedLine[1]"
+            filled
+            disabled
+          />
+          <v-text-field
+            label="Production capacity (PC)"
+            v-model="selectedLine[2]"
+            filled
+            disabled
+          />
         </v-col>
 
         <v-col>
-          <!-- -->
-          <v-card></v-card>
+          <v-slider
+            v-model="numOfLines"
+            label="Number of Assembly Lines"
+            step="1"
+            :min="1"
+            :max="10"
+            ticks="always"
+            tick-size="5"
+            thumb-label="always"
+            :thumb-size="24"
+          />
+
+          <v-slider
+            v-model="quality.val"
+            :label="quality.label"
+            :thumb-color="'primary'"
+            :thumb-size="24"
+            thumb-label="always"
+          />
+          <v-slider
+            v-model="workload.val"
+            :label="workload.label"
+            :thumb-color="'primary'"
+            :thumb-size="24"
+            thumb-label="always"
+          />
+          <v-slider
+            v-model="safety.val"
+            :label="safety.label"
+            :thumb-color="'primary'"
+            :thumb-size="24"
+            thumb-label="always"
+          />
         </v-col>
       </v-row>
+
+      <confirmation-dialog />
     </v-container>
   </v-app>
 </template>
 
 <script>
 import prevCurRoundStats from "../components/prevCurRoundStats.vue";
+import confirmationDialog from "../components/confirmationDialog.vue";
 export default {
-  components: { prevCurRoundStats },
+  components: { prevCurRoundStats, confirmationDialog },
   name: "bike-construction",
   data() {
-    return {};
+    return {
+      selectedLine: "",
+      numOfLines: 1,
+      quality: { label: "Quality (%)", val: 50, color: "primary" },
+      workload: { label: "Workload (%)", val: 50, color: "primary" },
+      safety: { label: "Safety (%)", val: 50, color: "primary" },
+      assemblyLines: [
+        {
+          name: "Assembly Line 1",
+          value: ["100", "50", "200"],
+        },
+        {
+          name: "Assembly Line 2",
+          value: ["300", "100", "600"],
+        },
+        {
+          name: "Assembly Line 3",
+          value: ["500", "250", "2000"],
+        },
+      ],
+    };
   },
   props: {
     progressElement: Array,

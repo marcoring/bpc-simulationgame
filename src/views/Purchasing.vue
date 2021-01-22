@@ -48,6 +48,8 @@
         </v-col>
       </v-row>
 
+      <v-divider />
+
       <!-- Managing purchaising process -->
       <v-row style="margin-top: 10px;">
         <h2 style="text-align: left;">Manage purchaising process</h2>
@@ -58,7 +60,7 @@
           <v-slider
             v-model="quality.val"
             :label="quality.label"
-            :thumb-color="primary"
+            :thumb-color="'primary'"
             thumb-label="always"
           />
         </v-col>
@@ -71,46 +73,16 @@
         </v-col>
       </v-row>
 
-      <v-dialog v-model="confirmChangesDialog" persistant width="30%">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" rounded dark v-bind="attrs" v-on="on">
-            <v-icon left>
-              mdi-check-outline
-            </v-icon>
-            Accept changes
-          </v-btn>
-        </template>
-
-        <v-card>
-          <v-card-text>
-            Are you sure you want to confirm changes?
-          </v-card-text>
-          <v-divider />
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              color="primary"
-              text
-              @click="
-                confirmChangesDialog = false;
-                confirmChanges();
-              "
-            >
-              Accept
-            </v-btn>
-            <v-btn color="red" text @click="confirmChangesDialog = false">
-              Declaine
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <confirmation-dialog />
     </v-container>
   </v-app>
 </template>
 
 <script>
+import confirmationDialog from "../components/confirmationDialog.vue";
 export default {
   name: "Purchaising",
+  components: { confirmationDialog },
   data() {
     return {
       vendors: ["Vendor 1", "Vendor 2", "Vendor 3"],
@@ -135,7 +107,6 @@ export default {
           totalCost: "8.000",
         },
       ],
-      confirmChangesDialog: false,
       searchPrevRound: "",
       searchCurRound: "",
       headersRound: [
@@ -183,12 +154,6 @@ export default {
         },
       ],
     };
-  },
-  methods: {
-    confirmChanges() {
-      console.log("Purchaising-changes COMPLETED");
-      // Todo: send data (as oData) to Backend
-    },
   },
   props: {
     progressElements: Array,
