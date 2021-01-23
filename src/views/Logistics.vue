@@ -1,84 +1,83 @@
 <template>
-  <v-app id="logistics">
-    <v-container>
-      <!-- Statistic about current and previous round -->
-      <v-row style="height: 350px;">
-        <v-col>
-          <!-- Previous Round Status -->
-          <v-card>
-            <v-card-title>
-              Previous Round
-            </v-card-title>
-            <v-card-text>
-              <p>Transport company: {{ prevTranspComp }}</p>
-              <p>Delivery costs (EUR): {{ prevDelCosts }}</p>
-              <p>Quality of delivery (%): {{ prevQualDel }}</p>
-            </v-card-text>
-          </v-card>
-        </v-col>
+  <v-container id="logistics">
+    <!-- Statistic about current and previous round -->
+    <v-row>
+      <v-col>
+        <!-- Previous Round Status -->
+        <v-card style="height:100%">
+          <v-card-title>
+            Previous Round
+          </v-card-title>
+          <v-card-text>
+            <p>Transport company: {{ prevTranspComp }}</p>
+            <p>Delivery costs (EUR): {{ prevDelCosts }}</p>
+            <p>Quality of delivery (%): {{ prevQualDel }}</p>
+          </v-card-text>
+        </v-card>
+      </v-col>
 
-        <v-col>
-          <!-- Current Round Status -->
-          <v-card>
-            <v-card-title>
-              Current Round
-            </v-card-title>
-            <v-card-text>
-              <p>Transport company: {{ curTranspComp }}</p>
-              <p>Delivery costs (EUR): {{ curDelCosts }}</p>
-              <p>Quality of delivery (%): {{ curQualDel }}</p>
-            </v-card-text>
-          </v-card>
-        </v-col>
+      <v-col>
+        <!-- Current Round Status -->
+        <v-card style="height:100%">
+          <v-card-title>
+            Current Round
+          </v-card-title>
+          <v-card-text>
+            <p>Transport company: {{ curTranspComp }}</p>
+            <p>Delivery costs (EUR): {{ curDelCosts }}</p>
+            <p>Quality of delivery (%): {{ curQualDel }}</p>
+          </v-card-text>
+        </v-card>
+      </v-col>
 
-        <v-col>
-          <!-- Cost Accounting -->
-          <cost-accounting-card
-            :budget="10.0"
-            :runningCosts="222.222"
-            :avgProdCostBike="'Incomplete'"
-            :estimatedQual="21.29"
-            :maxProdCapac="'Incomplete'"
-            :overDemand="40000.0"
-          />
-        </v-col>
-      </v-row>
+      <v-col>
+        <!-- Cost Accounting -->
+        <cost-accounting-card
+          style="height:100%"
+          :budget="10.0"
+          :runningCosts="222.222"
+          :avgProdCostBike="'Incomplete'"
+          :estimatedQual="21.29"
+          :maxProdCapac="'Incomplete'"
+          :overDemand="40000.0"
+        />
+      </v-col>
+    </v-row>
 
-      <v-divider />
+    <v-divider />
 
-      <!-- Managing logistic process -->
-      <v-row style="margin-top: 10px;">
-        <h2 style="text-align: left;">Manage logistic process</h2>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            v-model="selectedCompany"
-            :items="transportCompanies"
-            label="Choose transportation company..."
-            item-text="name"
-          />
-        </v-col>
+    <!-- Managing logistic process -->
+    <v-row style="margin-top: 10px;">
+      <h2 style="text-align: left;">Manage logistic process</h2>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-select
+          v-model="selectedCompany"
+          :items="transportCompanies"
+          label="Choose transportation company..."
+          item-text="name"
+        />
+      </v-col>
 
-        <v-col>
-          <v-text-field
-            v-model="selectedCompany[0]"
-            label="Delivery costs (EUR)"
-            filled
-            disabled
-          />
-          <v-text-field
-            v-model="selectedCompany[1]"
-            label="Quality of delivery (%)"
-            filled
-            disabled
-          />
-        </v-col>
-      </v-row>
+      <v-col>
+        <v-text-field
+          v-model="selectedCompany[0]"
+          label="Delivery costs (EUR)"
+          filled
+          disabled
+        />
+        <v-text-field
+          v-model="selectedCompany[1]"
+          label="Quality of delivery (%)"
+          filled
+          disabled
+        />
+      </v-col>
+    </v-row>
 
-      <confirmation-dialog />
-    </v-container>
-  </v-app>
+    <confirmation-dialog />
+  </v-container>
 </template>
 
 <script>

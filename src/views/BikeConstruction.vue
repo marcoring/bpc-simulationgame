@@ -1,110 +1,108 @@
 <template>
-  <v-app id="bike-construction">
-    <v-container>
-      <!-- custom component with statistic about current, previous round and cost accounting -->
-      <prev-cur-round-stats
-        :prevAsmLine="'SmartLine'"
-        :prevAsmLineCost="0.0"
-        :prevNumOfAsmLines="0"
-        :prevProdCosts="0.0"
-        :prevProdCapac="0.0"
-        :prevQuality="0.0"
-        :prevWorkload="0.0"
-        :prevSafety="0.0"
-        :curAsmLine="'SmartLine'"
-        :curAsmLineCost="0.0"
-        :curNumOfAsmLines="0"
-        :curProdCosts="0.0"
-        :curProdCapac="0.0"
-        :curQuality="0.0"
-        :curWorkload="0.0"
-        :curSafety="0.0"
-        :budget="150000.0"
-        :runningCosts="0.0"
-        :avgProdCostBike="'Incomplete'"
-        :estimatedQual="0.0"
-        :maxProdCapac="'Incomplete'"
-        :overDemand="40000.0"
-        style="height: 500px;"
-      />
+  <v-container id="bike-construction">
+    <!-- custom component with statistic about current, previous round and cost accounting -->
+    <prev-cur-round-stats
+      :prevAsmLine="'SmartLine'"
+      :prevAsmLineCost="0.0"
+      :prevNumOfAsmLines="0"
+      :prevProdCosts="0.0"
+      :prevProdCapac="0.0"
+      :prevQuality="0.0"
+      :prevWorkload="0.0"
+      :prevSafety="0.0"
+      :curAsmLine="'SmartLine'"
+      :curAsmLineCost="0.0"
+      :curNumOfAsmLines="0"
+      :curProdCosts="0.0"
+      :curProdCapac="0.0"
+      :curQuality="0.0"
+      :curWorkload="0.0"
+      :curSafety="0.0"
+      :budget="150000.0"
+      :runningCosts="0.0"
+      :avgProdCostBike="'Incomplete'"
+      :estimatedQual="0.0"
+      :maxProdCapac="'Incomplete'"
+      :overDemand="40000.0"
+      style="height: 500px;"
+    />
 
-      <v-divider />
+    <v-divider />
 
-      <!-- Managing bike construction process -->
-      <v-row style="margin-top: 10px;">
-        <h2 style="text-align: left;">
-          Manage bike construction preparation process
-        </h2>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            v-model="selectedLine"
-            :items="assemblyLines"
-            label="Choose assembly line..."
-            item-text="name"
-          />
+    <!-- Managing bike construction process -->
+    <v-row style="margin-top: 10px;">
+      <h2 style="text-align: left;">
+        Manage bike construction preparation process
+      </h2>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-select
+          v-model="selectedLine"
+          :items="assemblyLines"
+          label="Choose assembly line..."
+          item-text="name"
+        />
 
-          <v-text-field
-            label="Assembly costs (EUR)"
-            v-model="selectedLine[0]"
-            filled
-            disabled
-          />
-          <v-text-field
-            label="Production costs (EUR)"
-            v-model="selectedLine[1]"
-            filled
-            disabled
-          />
-          <v-text-field
-            label="Production capacity (PC)"
-            v-model="selectedLine[2]"
-            filled
-            disabled
-          />
-        </v-col>
+        <v-text-field
+          label="Assembly costs (EUR)"
+          v-model="selectedLine[0]"
+          filled
+          disabled
+        />
+        <v-text-field
+          label="Production costs (EUR)"
+          v-model="selectedLine[1]"
+          filled
+          disabled
+        />
+        <v-text-field
+          label="Production capacity (PC)"
+          v-model="selectedLine[2]"
+          filled
+          disabled
+        />
+      </v-col>
 
-        <v-col>
-          <v-slider
-            v-model="numOfLines"
-            label="Number of Assembly Lines"
-            step="1"
-            :min="1"
-            :max="10"
-            ticks="always"
-            tick-size="5"
-            thumb-label="always"
-            :thumb-size="24"
-          />
+      <v-col>
+        <v-slider
+          v-model="numOfLines"
+          label="Number of Assembly Lines"
+          step="1"
+          :min="1"
+          :max="10"
+          ticks="always"
+          tick-size="5"
+          thumb-label="always"
+          :thumb-size="24"
+        />
 
-          <v-slider
-            v-model="quality.val"
-            :label="quality.label"
-            :thumb-color="'primary'"
-            :thumb-size="24"
-            thumb-label="always"
-          />
-          <v-slider
-            v-model="workload.val"
-            :label="workload.label"
-            :thumb-color="'primary'"
-            :thumb-size="24"
-            thumb-label="always"
-          />
-          <v-slider
-            v-model="safety.val"
-            :label="safety.label"
-            :thumb-color="'primary'"
-            :thumb-size="24"
-            thumb-label="always"
-          />
-        </v-col>
-      </v-row>
+        <v-slider
+          v-model="quality.val"
+          :label="quality.label"
+          :thumb-color="'primary'"
+          :thumb-size="24"
+          thumb-label="always"
+        />
+        <v-slider
+          v-model="workload.val"
+          :label="workload.label"
+          :thumb-color="'primary'"
+          :thumb-size="24"
+          thumb-label="always"
+        />
+        <v-slider
+          v-model="safety.val"
+          :label="safety.label"
+          :thumb-color="'primary'"
+          :thumb-size="24"
+          thumb-label="always"
+        />
+      </v-col>
+    </v-row>
 
-      <confirmation-dialog />
-    </v-container>
-  </v-app>
+    <confirmation-dialog />
+  </v-container>
 </template>
 
 <script>

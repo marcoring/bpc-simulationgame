@@ -1,60 +1,59 @@
 <template>
-  <v-app id="prev-cur-round-stats">
-    <v-container>
-      <!-- Statistic about current, previous round and cost accounting -->
-      <v-row>
-        <v-col>
-          <!-- Previous Round Status -->
-          <v-card>
-            <v-card-title>
-              Previous Round
-            </v-card-title>
-            <v-card-text>
-              <p>Assembly line: {{ prevAsmLine }}</p>
-              <p>Assembly line costs (EUR): {{ prevAsmLineCost }}</p>
-              <p>Number of assembly lines: {{ prevNumOfAsmLines }}</p>
-              <p>Production costs (EUR): {{ prevProdCosts }}</p>
-              <p>Production capacity (PC): {{ prevProdCapac }}</p>
-              <p>Quality (%): {{ prevQuality }}</p>
-              <p>Workload (%): {{ prevWorkload }}</p>
-              <p>Safety (%): {{ prevSafety }}</p>
-            </v-card-text>
-          </v-card>
-        </v-col>
+  <v-container id="prev-cur-round-stats">
+    <!-- Statistic about current, previous round and cost accounting -->
+    <v-row>
+      <v-col>
+        <!-- Previous Round Status -->
+        <v-card style="height:100%">
+          <v-card-title>
+            Previous Round
+          </v-card-title>
+          <v-card-text>
+            <p>Assembly line: {{ prevAsmLine }}</p>
+            <p>Assembly line costs (EUR): {{ prevAsmLineCost }}</p>
+            <p>Number of assembly lines: {{ prevNumOfAsmLines }}</p>
+            <p>Production costs (EUR): {{ prevProdCosts }}</p>
+            <p>Production capacity (PC): {{ prevProdCapac }}</p>
+            <p>Quality (%): {{ prevQuality }}</p>
+            <p>Workload (%): {{ prevWorkload }}</p>
+            <p>Safety (%): {{ prevSafety }}</p>
+          </v-card-text>
+        </v-card>
+      </v-col>
 
-        <v-col>
-          <!-- Current Round Status -->
-          <v-card>
-            <v-card-title>
-              Current Round
-            </v-card-title>
-            <v-card-text>
-              <p>Assembly line: {{ curAsmLine }}</p>
-              <p>Assembly line costs (EUR): {{ curAsmLineCost }}</p>
-              <p>Number of assembly lines: {{ curNumOfAsmLines }}</p>
-              <p>Production costs (EUR): {{ curProdCosts }}</p>
-              <p>Production capacity (PC): {{ curProdCapac }}</p>
-              <p>Quality (%): {{ curQuality }}</p>
-              <p>Workload (%): {{ curWorkload }}</p>
-              <p>Safety (%): {{ curSafety }}</p>
-            </v-card-text>
-          </v-card>
-        </v-col>
+      <v-col>
+        <!-- Current Round Status -->
+        <v-card style="height:100%">
+          <v-card-title>
+            Current Round
+          </v-card-title>
+          <v-card-text>
+            <p>Assembly line: {{ curAsmLine }}</p>
+            <p>Assembly line costs (EUR): {{ curAsmLineCost }}</p>
+            <p>Number of assembly lines: {{ curNumOfAsmLines }}</p>
+            <p>Production costs (EUR): {{ curProdCosts }}</p>
+            <p>Production capacity (PC): {{ curProdCapac }}</p>
+            <p>Quality (%): {{ curQuality }}</p>
+            <p>Workload (%): {{ curWorkload }}</p>
+            <p>Safety (%): {{ curSafety }}</p>
+          </v-card-text>
+        </v-card>
+      </v-col>
 
-        <v-col>
-          <!-- Cost Accounting -->
-          <cost-accounting-card
-            :budget="budget"
-            :runningCosts="runningCosts"
-            :avgProdCostBike="avgProdCostBike"
-            :estimatedQual="estimatedQual"
-            :maxProdCapac="maxProdCapac"
-            :overDemand="overDemand"
-          />
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-app>
+      <v-col>
+        <!-- Cost Accounting -->
+        <cost-accounting-card
+          style="height:100%"
+          :budget="budget"
+          :runningCosts="runningCosts"
+          :avgProdCostBike="avgProdCostBike"
+          :estimatedQual="estimatedQual"
+          :maxProdCapac="maxProdCapac"
+          :overDemand="overDemand"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

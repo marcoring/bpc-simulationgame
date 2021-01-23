@@ -1,72 +1,70 @@
 <template>
-  <v-app id="dashboard">
-    <v-container>
-      <!-- Linear Progress-Bar -->
-      <v-row class="pa-6 text-left">
-        <h2>Round {{ round }}</h2>
-        <v-progress-linear
-          style="border-radius: 10px"
-          color="#4E9455"
-          height="30"
-          :value="calculateProgress"
-          rounded
-          striped
-        >
-          <strong>{{ calculateProgress }}%</strong>
-        </v-progress-linear>
-      </v-row>
+  <v-container id="dashboard">
+    <!-- Linear Progress-Bar -->
+    <v-row class="pa-6 text-left">
+      <h2>Round {{ round }}</h2>
+      <v-progress-linear
+        style="border-radius: 10px"
+        color="#4E9455"
+        height="30"
+        :value="calculateProgress"
+        rounded
+        striped
+      >
+        <strong>{{ calculateProgress }}%</strong>
+      </v-progress-linear>
+    </v-row>
 
-      <!-- Circular Progress-Bars with Pop-Overs -->
-      <v-row class="pa-10 text-center">
-        <v-col v-for="element in calculatedProgressElements" :key="element.id">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-progress-circular
-                :round="round"
-                :id="element.id"
-                :width="15"
-                :rotate="-90"
-                :size="100"
-                :value="element.value"
-                @click="$router.push(element.id)"
-                style="cursor: pointer;"
-                color="#4E9455"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon color="black" large>{{ element.icon }}</v-icon>
-              </v-progress-circular>
-            </template>
-            <span>{{ element.value }}</span>
-          </v-tooltip>
-          <h3 v-show="element.requiredRound <= round">{{ element.name }}</h3>
-        </v-col>
-      </v-row>
-
-      <!-- Cards -->
-      <v-row class="pa-6 text-left">
-        <v-col>
-          <cost-accounting-card
-            :budget="10.0"
-            :runningCosts="222.222"
-            :avgProdCostBike="'Incomplete'"
-            :estimatedQual="21.29"
-            :maxProdCapac="'Incomplete'"
-            :overDemand="40000.0"
-          />
-        </v-col>
-        <v-col>
-          <v-card rounded>
-            <roundRules
-              :generalRules="false"
-              :headerImage="false"
+    <!-- Circular Progress-Bars with Pop-Overs -->
+    <v-row class="pa-10 text-center">
+      <v-col v-for="element in calculatedProgressElements" :key="element.id">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-progress-circular
               :round="round"
-            />
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-app>
+              :id="element.id"
+              :width="15"
+              :rotate="-90"
+              :size="100"
+              :value="element.value"
+              @click="$router.push(element.id)"
+              style="cursor: pointer;"
+              color="#4E9455"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon color="black" large>{{ element.icon }}</v-icon>
+            </v-progress-circular>
+          </template>
+          <span>{{ element.value }}</span>
+        </v-tooltip>
+        <h3 v-show="element.requiredRound <= round">{{ element.name }}</h3>
+      </v-col>
+    </v-row>
+
+    <!-- Cards -->
+    <v-row class="pa-6 text-left">
+      <v-col>
+        <cost-accounting-card
+          style="height:100%"
+          :budget="10.0"
+          :runningCosts="222.222"
+          :avgProdCostBike="'Incomplete'"
+          :estimatedQual="21.29"
+          :maxProdCapac="'Incomplete'"
+          :overDemand="40000.0"
+        />
+      </v-col>
+      <v-col>
+        <roundRules
+            style="height:100%"
+            :generalRules="false"
+            :headerImage="false"
+            :round="round"
+          />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

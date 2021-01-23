@@ -1,20 +1,16 @@
 <template>
-  <v-app id="cost-accounting-card">
-    <v-container>
-      <!-- Cost Accounting Card -->
-      <v-card rounded>
-        <v-card-title>Cost Accounting</v-card-title>
-        <v-card-text>
-          <p>Budget (EUR): {{ budget }}</p>
-          <p>Running costs (EUR): {{ runningCosts }}</p>
-          <p>Avg. Prod. Cost per Bike (EUR): {{ avgProdCostBike }}</p>
-          <p>Estimated Quality: {{ estimatedQual }}</p>
-          <p>Max. Production Capacity (PC): {{ maxProdCapac }}</p>
-          <p>Overall Demand (PC): {{ overDemand }}</p>
-        </v-card-text>
-      </v-card>
-    </v-container>
-  </v-app>
+  <!-- Cost Accounting Card -->
+  <v-card rounded id="cost-accounting-card">
+    <v-card-title>Cost Accounting</v-card-title>
+    <v-card-text>
+      <p>Budget (EUR): {{ budget }}</p>
+      <p>Running costs (EUR): {{ runningCosts }}</p>
+      <p>Avg. Prod. Cost per Bike (EUR): {{ avgProdCostBike }}</p>
+      <p>Estimated Quality: {{ estimatedQual }}</p>
+      <p>Max. Production Capacity (PC): {{ maxProdCapac }}</p>
+      <p>Overall Demand (PC): {{ overDemand }}</p>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

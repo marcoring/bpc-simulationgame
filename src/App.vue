@@ -18,9 +18,8 @@
 
         <v-divider />
 
-        <v-list v-for="element in progressElements" :key="element.id" nav dense>
+        <v-list v-for="element in calculatedProgressElements" :key="element.id" nav dense>
           <v-list-item
-            v-show="element.requiredRound <= round"
             :round="round"
             :id="element.id"
             :value="element.value"
@@ -44,89 +43,94 @@
       </v-navigation-drawer>
 
       <!-- Header -->
-      <v-row v-if="currentRouteName !== 'LandingPage'" class="pa-3 text-left">
-        <v-col>
+      <v-row v-if="currentRouteName !== 'LandingPage'" class="pa-3 mx-3 text-left justify-space-between">
+        <v-col class="d-flex flex-column justify-start align-start">
           <h1>{{ currentRouteName }}</h1>
           <h3>{{ teamName }}</h3>
+          <h3>{{ teamColor }}</h3>
         </v-col>
-        <v-img
-          :src="require('@/assets/logo.png')"
-          max-width="100px"
-          class="mx-auto justify-left"
-          @click="openSecretDialog"
-        />
 
-        <v-spacer />
+        <v-col class="d-flex justify-center align-center">
+          <v-img
+            :src="require('@/assets/logo.png')"
+            max-width="100px"
+            class="mx-auto justify-left"
+            @click="openSecretDialog"
+          />
+        </v-col>
+        <!-- Go-Back (to Dashboard) Button for all components-views -->
 
-        <!-- Button (End-Round: for Dashboard-view and Go-Back for other) -->
-        <v-dialog
-          v-if="currentRouteName === 'Dashboard'"
-          v-model="endRoundDialog"
-          persistent
-          width="50%"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn rounded color="primary" dark v-bind="attrs" v-on="on">
-              End Round
-            </v-btn>
-          </template>
+        <v-col class="d-flex justify-end align-center">
+          <v-btn
+            v-if="currentRouteName !== 'Dashboard'"
+            rounded
+            color="primary"
+            dark
+            @click="redirectToDashboard"
+          >
+            Go Back to Dashboard
+          </v-btn>
 
-          <v-card>
-            <v-card-title class="headline grey lighten-2">
-              Round {{ round }}
-            </v-card-title>
-
-            <v-card-text>
-              <p>Do you really want to end the current round?</p>
-              <p>
-                You won't be able to make any changes until the next round has
-                started!
-              </p>
-            </v-card-text>
-
-            <v-divider />
-
-            <v-card-actions>
-              <v-spacer />
-              <v-btn color="red lighten-2" text @click="endRoundDialog = false">
-                Go Back
-              </v-btn>
-
-              <v-btn
-                color="primary"
-                text
-                @click="
-                  endRoundDialog = false;
-                  endRound();
-                "
-              >
+          <!-- Button (End-Round: for Dashboard-view and Go-Back for other) -->
+          <v-dialog
+            v-if="currentRouteName === 'Dashboard'"
+            v-model="endRoundDialog"
+            persistent
+            width="50%"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn rounded color="primary" dark v-bind="attrs" v-on="on">
                 End Round
               </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            </template>
 
-        <!-- Go-Back (to Dashboard) Button for all components-views -->
-        <v-btn
-          v-if="currentRouteName !== 'Dashboard'"
-          rounded
-          color="primary"
-          dark
-          @click="redirectToDashboard"
-        >
-          Go Back to Dashboard
-        </v-btn>
+            <v-card>
+              <v-card-title class="headline grey lighten-2">
+                Round {{ round }}
+              </v-card-title>
+
+              <v-card-text>
+                <p>Do you really want to end the current round?</p>
+                <p>
+                  You won't be able to make any changes until the next round has
+                  started!
+                </p>
+              </v-card-text>
+
+              <v-divider />
+
+              <v-card-actions>
+                <v-spacer />
+                <v-btn color="red lighten-2" text @click="endRoundDialog = false">
+                  Go Back
+                </v-btn>
+
+                <v-btn
+                  color="primary"
+                  text
+                  @click="
+                    endRoundDialog = false;
+                    endRound();
+                  "
+                >
+                  End Round
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-col>
       </v-row>
-
       <!-- ******************************************************************************************* -->
 
       <!-- Router (and values as props to pass them to child) -->
-      <router-view
-        :round="round"
-        :teamName="teamName"
-        :progressElements="progressElements"
-        @teamSelected="setTeam"
-      />
+      <v-app>
+        <router-view
+          :round="round"
+          :teamName="teamName"
+          :progressElements="progressElements"
+          @teamSelected="setTeam"
+        />
+      </v-app>
 
       <!-- ******************************************************************************************* -->
 
@@ -188,7 +192,7 @@ export default {
   components: { roundRules },
   data() {
     return {
-      teamName: "",
+      teamName: "Test",
       teamColor: "",
       round: 1,
       rulesDialog: false,
@@ -346,6 +350,9 @@ export default {
     },
   },
   computed: {
+    calculatedProgressElements() {
+      return this.progressElements.filter(element => element.requiredRound <= this.round)
+    },
     currentRouteName() {
       return this.$route.name;
     },
@@ -386,10 +393,16 @@ export default {
       }
     },
   },
+  created(){
+    // Navigate to main path when app is started
+    if(this.$route.path !== "/") {
+      this.$router.push("/");
+    }
+  },
   mounted() {
     console.log("mounted");
     this.newRoundRules();
-  },
+  }
 };
 </script>
 

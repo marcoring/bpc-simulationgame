@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app-dev-and-maintenance">
+  <v-container id="app-dev-and-maintenance">
     <v-container v-if="round >= 4">
       <!-- Statistic about current, previous round and cost accounting -->
       <v-row style="height: 400px;">
@@ -84,7 +84,7 @@
       <h1>Hey, url-hacker, you have no access to this component yet!!</h1>
       <v-icon size="500">mdi-police-badge</v-icon>
     </v-container>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

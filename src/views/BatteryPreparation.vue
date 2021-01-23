@@ -1,5 +1,5 @@
 <template>
-  <v-app id="battery-preparation">
+  <v-container id="battery-preparation">
     <v-container v-if="round >= 2">
       <!-- custom component with statistic about current, previous round and cost accounting -->
       <prev-cur-round-stats
@@ -106,7 +106,7 @@
       <h1>Hey, url-hacker, you have no access to this component yet!!</h1>
       <v-icon size="500">mdi-police-badge</v-icon>
     </v-container>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

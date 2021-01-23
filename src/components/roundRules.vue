@@ -1,5 +1,5 @@
 <template>
-  <v-app id="roundRulesCard">
+  <v-card id="roundRulesCard">
     <v-card-title class="headline grey lighten-2">
       Round {{ round }}
 
@@ -29,7 +29,7 @@
         </ul>
       </div>
     </v-card-text>
-  </v-app>
+  </v-card>
 </template>
 
 <script>

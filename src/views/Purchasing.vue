@@ -1,81 +1,79 @@
 <template>
-  <v-app id="purchaising">
-    <v-container>
-      <!-- Statistic about current and previous round -->
-      <v-row>
-        <v-col>
-          <!-- Previous Round Data -->
-          <v-card>
-            <v-card-title>
-              Previous Round Data
-              <v-spacer />
-              <v-text-field
-                v-model="searchPrevRound"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                hide-details
-              ></v-text-field>
-            </v-card-title>
-            <v-data-table
-              :headers="headersRound"
-              :items="dataPrevRound"
-              :search="searchPrevRound"
-            />
-          </v-card>
-        </v-col>
-
-        <v-col>
-          <!-- Current Round Data -->
-          <v-card>
-            <v-card-title>
-              Current Round Data
-              <v-spacer />
-              <v-text-field
-                v-model="searchCurRound"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                hide-details
-              ></v-text-field>
-            </v-card-title>
-            <v-data-table
-              :headers="headersRound"
-              :items="dataCurrentRound"
-              :search="searchCurRound"
-            />
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-divider />
-
-      <!-- Managing purchaising process -->
-      <v-row style="margin-top: 10px;">
-        <h2 style="text-align: left;">Manage purchaising process</h2>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select :items="vendors" label="Choose vendor..." />
-          <v-slider
-            v-model="quality.val"
-            :label="quality.label"
-            :thumb-color="'primary'"
-            thumb-label="always"
-          />
-        </v-col>
-
-        <v-col>
+  <v-container id="purchaising">
+    <!-- Statistic about current and previous round -->
+    <v-row>
+      <v-col>
+        <!-- Previous Round Data -->
+        <v-card>
+          <v-card-title>
+            Previous Round Data
+            <v-spacer />
+            <v-text-field
+              v-model="searchPrevRound"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-card-title>
           <v-data-table
-            :headers="headersPurchaising"
-            :items="dataPurchaising"
+            :headers="headersRound"
+            :items="dataPrevRound"
+            :search="searchPrevRound"
           />
-        </v-col>
-      </v-row>
+        </v-card>
+      </v-col>
 
-      <confirmation-dialog />
-    </v-container>
-  </v-app>
+      <v-col>
+        <!-- Current Round Data -->
+        <v-card>
+          <v-card-title>
+            Current Round Data
+            <v-spacer />
+            <v-text-field
+              v-model="searchCurRound"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-card-title>
+          <v-data-table
+            :headers="headersRound"
+            :items="dataCurrentRound"
+            :search="searchCurRound"
+          />
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-divider />
+
+    <!-- Managing purchaising process -->
+    <v-row style="margin-top: 10px;">
+      <h2 style="text-align: left;">Manage purchaising process</h2>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-select :items="vendors" label="Choose vendor..." />
+        <v-slider
+          v-model="quality.val"
+          :label="quality.label"
+          :thumb-color="'primary'"
+          thumb-label="always"
+        />
+      </v-col>
+
+      <v-col>
+        <v-data-table
+          :headers="headersPurchaising"
+          :items="dataPurchaising"
+        />
+      </v-col>
+    </v-row>
+
+    <confirmation-dialog />
+  </v-container>
 </template>
 
 <script>
