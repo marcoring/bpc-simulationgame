@@ -5,7 +5,7 @@
       <v-row style="height: 400px;">
         <v-col>
           <!-- Previous Round Status -->
-          <v-card>
+          <v-card style="height:100%">
             <v-card-title>
               Previous Round
             </v-card-title>
@@ -21,7 +21,7 @@
 
         <v-col>
           <!-- Current Round Status -->
-          <v-card>
+          <v-card style="height:100%">
             <v-card-title>
               Current Round
             </v-card-title>
@@ -37,7 +37,7 @@
 
         <v-col>
           <!-- Cost Accounting -->
-          <cost-accounting-card
+          <cost-accounting-card style="height:100%"
             :budget="10.0"
             :runningCosts="222.222"
             :avgProdCostBike="'Incomplete'"
