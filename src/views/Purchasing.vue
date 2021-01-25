@@ -65,10 +65,7 @@
       </v-col>
 
       <v-col>
-        <v-data-table
-          :headers="headersPurchaising"
-          :items="dataPurchaising"
-        />
+        <v-data-table :headers="headersPurchaising" :items="dataPurchaising" />
       </v-col>
     </v-row>
 
@@ -83,7 +80,12 @@ export default {
   components: { confirmationDialog },
   data() {
     return {
-      vendors: ["Vendor 1", "Vendor 2", "Vendor 3"],
+      vendors: [
+        "Bavaria eBike",
+        "Goldenmotor GmbH",
+        "ElectricRider",
+        "eBikesDE",
+      ],
       quality: { label: "Quality (%)", val: 50, color: "primary" },
       headersPurchaising: [
         { text: "Material", value: "material" },
@@ -93,13 +95,19 @@ export default {
       ],
       dataPurchaising: [
         {
-          material: "material 1",
+          material: "Battery",
           costPerMat: "500",
           amount: "55",
           totalCost: "27.500",
         },
         {
-          material: "material 2",
+          material: "Frame",
+          costPerMat: "100",
+          amount: "80",
+          totalCost: "8.000",
+        },
+        {
+          material: "Sensors",
           costPerMat: "100",
           amount: "80",
           totalCost: "8.000",

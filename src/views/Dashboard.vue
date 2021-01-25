@@ -57,11 +57,49 @@
       </v-col>
       <v-col>
         <roundRules
-            style="height:100%"
-            :generalRules="false"
-            :headerImage="false"
-            :round="round"
-          />
+          style="height:100%"
+          :generalRules="false"
+          :headerImage="false"
+          :round="round"
+        />
+      </v-col>
+    </v-row>
+
+    <!-- Leaderboard -->
+    <v-row class="pa-6 text-left">
+      <v-col>
+        <teams-leaderboard />
+      </v-col>
+    </v-row>
+
+    <!-- Charts -->
+    <v-row class="pa-6 text-left">
+      <v-col>
+        <v-card>
+          <v-card-title>Budget distribution </v-card-title>
+          <pie-chart />
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card>
+          <v-card-title>Budget changes</v-card-title>
+          <line-chart />
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row class="pa-6 text-left">
+      <v-col>
+        <v-card>
+          <v-card-title>Current round statistic</v-card-title>
+          <bar-chart />
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card>
+          <v-card-title>All rounds comparison</v-card-title>
+          <radar-chart />
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -70,8 +108,22 @@
 <script>
 import costAccountingCard from "../components/costAccountingCard.vue";
 import roundRules from "../components/roundRules.vue";
+import teamsLeaderboard from "../components/teamsLeaderboard.vue";
+import lineChart from "../components/charts/lineChart.vue";
+import pieChart from "../components/charts/pieChart.vue";
+import barChart from "../components/charts/barChart.vue";
+import radarChart from "../components/charts/radarChart.vue";
+
 export default {
-  components: { costAccountingCard, roundRules },
+  components: {
+    costAccountingCard,
+    roundRules,
+    teamsLeaderboard,
+    lineChart,
+    pieChart,
+    barChart,
+    radarChart,
+  },
   data() {
     return {};
   },
