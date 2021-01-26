@@ -39,6 +39,7 @@
       </v-tab>
     </v-tabs>
 
+    <!-- Manage Sales Activities -->
     <v-tabs-items v-model="salesTabs">
       <v-tab-item>
         <v-row>
@@ -86,7 +87,31 @@
         </v-row>
       </v-tab-item>
 
-      <v-tab-item> </v-tab-item>
+      <!-- Manage Sales Prices -->
+      <v-tab-item>
+        <v-row>
+          <v-col>
+            <v-text-field
+              label="Standard"
+              type="number"
+              min="0"
+              v-model="standardPrice"
+            />
+            <v-text-field
+              label="Standard Pro"
+              type="number"
+              min="0"
+              v-model="standardProPrice"
+            />
+            <v-text-field
+              label="Premium"
+              type="number"
+              min="0"
+              v-model="premiumPrice"
+            />
+          </v-col>
+        </v-row>
+      </v-tab-item>
     </v-tabs-items>
 
     <confirmation-dialog />
@@ -118,6 +143,9 @@ export default {
           value: ["500", "250", "2000"],
         },
       ],
+      standardPrice: 0.0,
+      standardProPrice: 0.0,
+      premiumPrice: 0.0,
     };
   },
   props: {
