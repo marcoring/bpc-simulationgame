@@ -60,8 +60,23 @@
               ticks="always"
               tick-size="5"
               thumb-label="always"
+              :color="teamColor"
+              :thumb-color="teamColor"
               :thumb-size="24"
-            />
+            >
+              <template v-slot:append>
+                <v-text-field
+                  v-model="numOfSalesPers"
+                  class="mt-0 pt-0"
+                  hide-details
+                  single-line
+                  :min="1"
+                  :max="10"
+                  type="number"
+                  style="width: 60px"
+                />
+              </template>
+            </v-slider>
           </v-col>
 
           <v-col>
@@ -114,18 +129,51 @@
       </v-tab-item>
     </v-tabs-items>
 
-    <confirmation-dialog />
+    <!-- Confirmation Dialog -->
+    <v-dialog v-model="confirmChangesDialog" persistant width="30%">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn :color="teamColor" rounded dark v-bind="attrs" v-on="on">
+          <v-icon left>
+            mdi-check-outline
+          </v-icon>
+          Accept changes
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-text>
+          Are you sure you want to confirm changes?
+        </v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            text
+            @click="
+              confirmChangesDialog = false;
+              confirmChanges();
+            "
+          >
+            Accept
+          </v-btn>
+          <v-btn color="red" text @click="confirmChangesDialog = false">
+            Declaine
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import prevCurRoundStats from "../components/prevCurRoundStats.vue";
-import confirmationDialog from "../components/confirmationDialog.vue";
 export default {
   name: "sales",
-  components: { prevCurRoundStats, confirmationDialog },
+  components: { prevCurRoundStats },
   data() {
     return {
+      confirmChangesDialog: false,
       salesTabs: null,
       selectedSalesActivities: "",
       numOfSalesPers: 1,
@@ -148,8 +196,17 @@ export default {
       premiumPrice: 0.0,
     };
   },
+  methods: {
+    confirmChanges() {
+      // Todo: send data (as oData) to Backend
+      console.log("redirect to Dashboard");
+      this.$emit("updateProgress", "sales", 100);
+      this.$router.push({ path: "/dashboard" });
+    },
+  },
   props: {
     progressElement: Array,
+    teamColor: String,
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <v-container id="confirmation-dialog">
     <v-dialog v-model="confirmChangesDialog" persistant width="30%">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" rounded dark v-bind="attrs" v-on="on">
+        <v-btn :color="teamColor" rounded dark v-bind="attrs" v-on="on">
           <v-icon left>
             mdi-check-outline
           </v-icon>
@@ -39,7 +39,12 @@
 <script>
 export default {
   name: "confirmation-dialog",
-  props: {},
+  props: {
+    round: Number,
+    progressElements: Array,
+    teamName: String,
+    teamColor: String,
+  },
   data() {
     return {
       confirmChangesDialog: false,
@@ -49,6 +54,7 @@ export default {
     confirmChanges() {
       // Todo: send data (as oData) to Backend
       console.log("redirect to Dashboard");
+      this.$emit("updateProgress", this.$route.name, 100);
       this.$router.push({ path: "/dashboard" });
     },
   },

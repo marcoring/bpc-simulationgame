@@ -47,7 +47,8 @@
                 hide-canvas
                 hide-mode-switch
                 mode="hexa"
-                v-model="teamColor">
+                v-model="teamColor"
+              >
               </v-color-picker>
             </v-col>
           </v-row>
@@ -69,7 +70,7 @@
 export default {
   data: () => ({
     teamName: "",
-    teamColor: "#FF0000",
+    teamColor: "#4E9356",
     items: ["Red", "Blue", "Green", "Orange"],
     valid: true,
     rules: {

@@ -18,7 +18,12 @@
 
         <v-divider />
 
-        <v-list v-for="element in calculatedProgressElements" :key="element.id" nav dense>
+        <v-list
+          v-for="element in calculatedProgressElements"
+          :key="element.id"
+          nav
+          dense
+        >
           <v-list-item
             :round="round"
             :id="element.id"
@@ -43,7 +48,10 @@
       </v-navigation-drawer>
 
       <!-- Header -->
-      <v-row v-if="currentRouteName !== 'LandingPage'" class="pa-3 mx-3 text-left justify-space-between">
+      <v-row
+        v-if="currentRouteName !== 'LandingPage'"
+        class="pa-3 mx-3 text-left justify-space-between"
+      >
         <v-col class="d-flex flex-column justify-start align-start">
           <h1>{{ currentRouteName }}</h1>
           <h3>{{ teamName }}</h3>
@@ -64,7 +72,7 @@
           <v-btn
             v-if="currentRouteName !== 'Dashboard'"
             rounded
-            color="primary"
+            :color="teamColor"
             dark
             @click="redirectToDashboard"
           >
@@ -79,7 +87,7 @@
             width="50%"
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn rounded color="primary" dark v-bind="attrs" v-on="on">
+              <v-btn rounded :color="teamColor" dark v-bind="attrs" v-on="on">
                 End Round
               </v-btn>
             </template>
@@ -101,7 +109,11 @@
 
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="red lighten-2" text @click="endRoundDialog = false">
+                <v-btn
+                  color="red lighten-2"
+                  text
+                  @click="endRoundDialog = false"
+                >
                   Go Back
                 </v-btn>
 
@@ -127,8 +139,10 @@
         <router-view
           :round="round"
           :teamName="teamName"
+          :teamColor="teamColor"
           :progressElements="progressElements"
           @teamSelected="setTeam"
+          @updateProgress="updateProgress"
         />
       </v-app>
 
@@ -187,11 +201,13 @@
 
 <script>
 import roundRules from "./components/roundRules.vue";
+//import axios from "axios";
 export default {
   name: "App",
   components: { roundRules },
   data() {
     return {
+      info: null,
       teamName: "Test",
       teamColor: "",
       round: 1,
@@ -202,70 +218,70 @@ export default {
         {
           id: "purchasing",
           name: "Purchasing",
-          value: 99,
+          value: 5,
           icon: "mdi-shopping-outline",
           requiredRound: 1,
         },
         {
           id: "logistics",
           name: "Logistics",
-          value: 99,
+          value: 5,
           icon: "mdi-truck",
           requiredRound: 1,
         },
         {
           id: "framePreparation",
           name: "Frame Preparation",
-          value: 99,
+          value: 5,
           icon: "mdi-bicycle",
           requiredRound: 1,
         },
         {
           id: "sensorsPreparation",
           name: "Sensors Preparation",
-          value: 99,
+          value: 5,
           icon: "mdi-chip",
           requiredRound: 1,
         },
         {
           id: "enginePreparation",
           name: "Engine Preparation",
-          value: 0,
+          value: 5,
           icon: "mdi-pac-man",
           requiredRound: 3,
         },
         {
           id: "batteryPreparation",
           name: "Battery Preparation",
-          value: 0,
+          value: 5,
           icon: "mdi-battery-charging-high",
           requiredRound: 2,
         },
         {
           id: "bikeConstruction",
           name: "Bike Construction",
-          value: 99,
+          value: 5,
           icon: "mdi-tools",
           requiredRound: 1,
         },
         {
           id: "appDevAndMaintenance",
           name: "Application Development and Maintenance",
-          value: 0,
+          value: 5,
           icon: "mdi-cellphone",
           requiredRound: 4,
         },
         {
           id: "qualityAssurance",
           name: "Quality Assurance",
-          value: 0,
+          value: 5,
           icon: "mdi-quality-high",
           requiredRound: 2,
         },
         {
           id: "sales",
           name: "Sales",
-          value: 99,
+          value: 5,
           icon: "mdi-currency-eur",
           requiredRound: 1,
         },
@@ -316,6 +332,11 @@ export default {
       this.teamName = name;
       this.teamColor = color;
     },
+    updateProgress(key, newValue) {
+      this.progressElements.find(
+        (element) => element.id === key
+      ).value = newValue;
+    },
     openSecretDialog() {
       console.log("Easter egg!");
       this.secretDialog = true;
@@ -323,6 +344,13 @@ export default {
     roundUpdate(round) {
       console.log("Round-update");
       this.round = round;
+      this.clearProgress();
+    },
+    clearProgress() {
+      // set progress of all 'circle'-elements to 5%
+      this.progressElements.forEach((element) => {
+        element.value = 5;
+      });
     },
     newRoundRules() {
       console.log("New Round Rules");
@@ -341,7 +369,7 @@ export default {
         console.log("End Game");
       } else {
         this.roundUpdate(++this.round);
-        this.rulesDialog = true;
+        //this.rulesDialog = true;
       }
     },
     redirectToDashboard() {
@@ -351,7 +379,9 @@ export default {
   },
   computed: {
     calculatedProgressElements() {
-      return this.progressElements.filter(element => element.requiredRound <= this.round)
+      return this.progressElements.filter(
+        (element) => element.requiredRound <= this.round
+      );
     },
     currentRouteName() {
       return this.$route.name;
@@ -393,16 +423,24 @@ export default {
       }
     },
   },
-  created(){
+  created() {
     // Navigate to main path when app is started
-    if(this.$route.path !== "/") {
+    if (this.$route.path !== "/") {
       this.$router.push("/");
     }
   },
   mounted() {
     console.log("mounted");
     this.newRoundRules();
-  }
+
+    // axios
+    //   .get(
+    //     "http://s06lp1.ucc.in.tum.de:8000/sap/opu/odata/sap/Z_ITBL_WS2020_SRV/"
+    //   )
+    //   .then((response) => (this.info = response));
+
+    // console.log(this.info);
+  },
 };
 </script>
 

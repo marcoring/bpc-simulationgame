@@ -5,7 +5,7 @@
       <h2>Round {{ round }}</h2>
       <v-progress-linear
         style="border-radius: 10px"
-        color="#4E9455"
+        :color="teamColor"
         height="30"
         :value="calculateProgress"
         rounded
@@ -29,7 +29,7 @@
               :value="element.value"
               @click="$router.push(element.id)"
               style="cursor: pointer;"
-              color="#4E9455"
+              :color="teamColor"
               v-bind="attrs"
               v-on="on"
             >
@@ -173,6 +173,7 @@ export default {
     round: Number,
     progressElements: Array,
     teamName: String,
+    teamColor: String,
   },
 };
 </script>

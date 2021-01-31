@@ -76,18 +76,51 @@
       </v-col>
     </v-row>
 
-    <confirmation-dialog />
+    <!-- Confirmation Dialog -->
+    <v-dialog v-model="confirmChangesDialog" persistant width="30%">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn :color="teamColor" rounded dark v-bind="attrs" v-on="on">
+          <v-icon left>
+            mdi-check-outline
+          </v-icon>
+          Accept changes
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-text>
+          Are you sure you want to confirm changes?
+        </v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            text
+            @click="
+              confirmChangesDialog = false;
+              confirmChanges();
+            "
+          >
+            Accept
+          </v-btn>
+          <v-btn color="red" text @click="confirmChangesDialog = false">
+            Declaine
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
-import confirmationDialog from "../components/confirmationDialog.vue";
 import costAccountingCard from "../components/costAccountingCard";
 export default {
   name: "logistics",
-  components: { confirmationDialog, costAccountingCard },
+  components: { costAccountingCard },
   data() {
     return {
+      confirmChangesDialog: false,
       transportCompanies: [
         {
           name: "Company 1",
@@ -103,7 +136,6 @@ export default {
         },
       ],
       selectedCompany: "",
-      confirmChangesDialog: false,
       prevTranspComp: "Ebike GmBh",
       prevDelCosts: 0.0,
       prevQualDel: 0.0,
@@ -135,14 +167,15 @@ export default {
       return this.selectedCompany.quality;
     },
     confirmChanges() {
-      console.log("Purchaising-changes COMPLETED");
       // Todo: send data (as oData) to Backend
       console.log("redirect to Dashboard");
+      this.$emit("updateProgress", "logistics", 100);
       this.$router.push({ path: "/dashboard" });
     },
   },
   props: {
     progressElements: Array,
+    teamColor: String,
   },
 };
 </script>

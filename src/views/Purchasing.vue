@@ -59,9 +59,25 @@
         <v-slider
           v-model="quality.val"
           :label="quality.label"
-          :thumb-color="'primary'"
+          :color="teamColor"
+          :min="1"
+          :max="100"
+          :thumb-color="teamColor"
           thumb-label="always"
-        />
+        >
+          <template v-slot:append>
+            <v-text-field
+              v-model="quality.val"
+              class="mt-0 pt-0"
+              hide-details
+              single-line
+              :min="1"
+              :max="100"
+              type="number"
+              style="width: 60px"
+            />
+          </template>
+        </v-slider>
       </v-col>
 
       <v-col>
@@ -69,17 +85,49 @@
       </v-col>
     </v-row>
 
-    <confirmation-dialog />
+    <!-- Confirmation Dialog -->
+    <v-dialog v-model="confirmChangesDialog" persistant width="30%">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn :color="teamColor" rounded dark v-bind="attrs" v-on="on">
+          <v-icon left>
+            mdi-check-outline
+          </v-icon>
+          Accept changes
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-text>
+          Are you sure you want to confirm changes?
+        </v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            text
+            @click="
+              confirmChangesDialog = false;
+              confirmChanges();
+            "
+          >
+            Accept
+          </v-btn>
+          <v-btn color="red" text @click="confirmChangesDialog = false">
+            Declaine
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
-import confirmationDialog from "../components/confirmationDialog.vue";
 export default {
   name: "Purchaising",
-  components: { confirmationDialog },
   data() {
     return {
+      confirmChangesDialog: false,
       vendors: [
         "Bavaria eBike",
         "Goldenmotor GmbH",
@@ -161,8 +209,17 @@ export default {
       ],
     };
   },
+  methods: {
+    confirmChanges() {
+      // Todo: send data (as oData) to Backend
+      console.log("redirect to Dashboard");
+      this.$emit("updateProgress", "purchasing", 100);
+      this.$router.push({ path: "/dashboard" });
+    },
+  },
   props: {
     progressElements: Array,
+    teamColor: String,
   },
 };
 </script>
