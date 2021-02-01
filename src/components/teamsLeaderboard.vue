@@ -1,6 +1,6 @@
 <template>
   <v-card rounded id="teams-leaderboard">
-    <v-card-title>Teams Leaderboard</v-card-title>
+    <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">Teams Leaderboard</v-card-title>
     <v-data-table
       :headers="leaderboardHeaders"
       :items="leaderboardItems"
@@ -55,6 +55,9 @@ export default {
         },
       ],
     };
+  },
+  props: {
+    teamColor: String,
   },
 };
 </script>

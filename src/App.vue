@@ -56,7 +56,7 @@
         <v-col class="d-flex flex-column justify-start align-start">
           <h1>{{ currentRouteName }}</h1>
           <h3><b>Team Name: </b> {{ teamName }}</h3>
-          <h3><b>Team Color: </b>{{ teamColor }}</h3> 
+          <h3 :style="'background-color:' + teamColor +'!important'" style="color: white"><b> Team Color:  </b>{{ teamColor }}</h3> 
         </v-col>
 
         <v-col class="d-flex justify-center align-center">
@@ -99,6 +99,7 @@
               </v-card-title>
 
               <v-card-text>
+                <br>
                 <p>Do you really want to end the current round?</p>
                 <p>
                   You won't be able to make any changes until the next round has
@@ -115,7 +116,7 @@
                   text
                   @click="endRoundDialog = false"
                 >
-                  Go Back
+                  <b>Back</b> 
                 </v-btn>
 
                 <v-btn
@@ -126,7 +127,7 @@
                     endRound();
                   "
                 >
-                  End Round
+                  <b>End Round</b>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -153,6 +154,7 @@
       <v-dialog
         v-if="!(currentRouteName === 'LandingPage')"
         v-model="rulesDialog"
+
         persistent
         width="80%"
       >
@@ -160,7 +162,7 @@
 
         <v-card>
           <!-- Round Rules -->
-          <roundRules :generalRules="true" :headerImage="true" :round="round" />
+          <roundRules :teamColor="teamColor" :generalRules="true" :headerImage="true" :round="round" />
 
           <v-divider />
 
@@ -179,11 +181,11 @@
 
         <v-card>
           <v-card-title class="headline grey lighten-2">
-            Congratulations! You have found secret Dialog!
+            Congratulations! You have found our secret Dialog!
           </v-card-title>
 
           <v-card-text>
-            <h2>© Technical University Munich (TUM) 2021</h2>
+            <h2> <br> © Technical University Munich (TUM) 2021</h2>
           </v-card-text>
 
           <v-divider />
@@ -191,7 +193,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn color="primary" text @click="secretDialog = false">
-              Close Dialog
+              <b>Close Dialog</b>
             </v-btn>
           </v-card-actions>
         </v-card>

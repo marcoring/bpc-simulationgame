@@ -12,7 +12,7 @@
 
       <v-card>
         <v-card-text>
-          Are you sure you want to confirm changes?
+         <br> Are you sure you want to confirm changes?
         </v-card-text>
         <v-divider />
         <v-card-actions>

@@ -45,7 +45,7 @@
     <!-- Cards -->
     <v-row class="pa-6 text-left">
       <v-col>
-        <cost-accounting-card
+        <cost-accounting-card 
           style="height:100%"
           :budget="10.0"
           :runningCosts="222.222"
@@ -53,6 +53,7 @@
           :estimatedQual="21.29"
           :maxProdCapac="'Incomplete'"
           :overDemand="40000.0"
+          :teamColor="teamColor"
         />
       </v-col>
       <v-col>
@@ -61,6 +62,7 @@
           :generalRules="false"
           :headerImage="false"
           :round="round"
+          :teamColor="teamColor"
         />
       </v-col>
     </v-row>
@@ -68,7 +70,7 @@
     <!-- Leaderboard -->
     <v-row class="pa-6 text-left">
       <v-col>
-        <teams-leaderboard />
+        <teams-leaderboard :teamColor="teamColor" />
       </v-col>
     </v-row>
 
@@ -76,13 +78,13 @@
     <v-row class="pa-6 text-left">
       <v-col>
         <v-card>
-          <v-card-title>Budget distribution </v-card-title>
+          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white"> Budget distribution </v-card-title>
           <pie-chart />
         </v-card>
       </v-col>
       <v-col>
         <v-card>
-          <v-card-title>Budget changes</v-card-title>
+          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white"> Budget changes </v-card-title>
           <line-chart />
         </v-card>
       </v-col>
@@ -91,13 +93,13 @@
     <v-row class="pa-6 text-left">
       <v-col>
         <v-card>
-          <v-card-title>Current round statistic</v-card-title>
+          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">Current round statistic</v-card-title>
           <bar-chart />
         </v-card>
       </v-col>
       <v-col>
         <v-card>
-          <v-card-title>All rounds comparison</v-card-title>
+          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">All rounds comparison</v-card-title>
           <radar-chart />
         </v-card>
       </v-col>

@@ -26,6 +26,7 @@
         :maxProdCapac="'Incomplete'"
         :overDemand="40000.0"
         style="height: 500px;"
+        :teamColor="teamColor"
       />
 
       <v-divider />
@@ -40,6 +41,7 @@
             v-model="selectedLine"
             :items="assemblyLines"
             label="Choose assembly line..."
+            :color="teamColor"
             item-text="name"
           />
 
@@ -75,6 +77,8 @@
             thumb-label="always"
             :color="teamColor"
             :thumb-color="teamColor"
+            :track-color="'teamColor'+'lighten-3'"
+              :track-fill-color="teamColor"
             :thumb-size="24"
           >
             <template v-slot:append>
@@ -100,6 +104,8 @@
             :max="100"
             :thumb-size="24"
             thumb-label="always"
+            :track-color="'teamColor'+'lighten-3'"
+            :track-fill-color="teamColor"
           >
             <template v-slot:append>
               <v-text-field
@@ -124,6 +130,8 @@
             :max="100"
             :thumb-size="24"
             thumb-label="always"
+            :track-color="'teamColor'+'lighten-3'"
+            :track-fill-color="teamColor"
           >
             <template v-slot:append>
               <v-text-field
@@ -148,6 +156,8 @@
             :max="100"
             :thumb-size="24"
             thumb-label="always"
+            :track-color="'teamColor'+'lighten-3'"
+            :track-fill-color="teamColor"
           >
             <template v-slot:append>
               <v-text-field
@@ -178,7 +188,7 @@
 
         <v-card>
           <v-card-text>
-            Are you sure you want to confirm changes?
+          <br>  Are you sure you want to confirm changes?
           </v-card-text>
           <v-divider />
           <v-card-actions>
@@ -191,10 +201,10 @@
                 confirmChanges();
               "
             >
-              Accept
+              <b>Accept</b>
             </v-btn>
             <v-btn color="red" text @click="confirmChangesDialog = false">
-              Declaine
+              <b>Decline</b>
             </v-btn>
           </v-card-actions>
         </v-card>

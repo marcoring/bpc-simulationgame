@@ -6,7 +6,7 @@
         <v-col>
           <!-- Previous Round Status -->
           <v-card style="height:100%">
-            <v-card-title>
+            <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
               Previous Round
             </v-card-title>
             <v-card-text>
@@ -22,7 +22,7 @@
         <v-col>
           <!-- Current Round Status -->
           <v-card style="height:100%">
-            <v-card-title>
+            <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
               Current Round
             </v-card-title>
             <v-card-text>
@@ -45,6 +45,7 @@
             :estimatedQual="21.29"
             :maxProdCapac="'Incomplete'"
             :overDemand="40000.0"
+            :teamColor="teamColor"
           />
         </v-col>
       </v-row>
@@ -63,6 +64,7 @@
             v-model="selectedQAType"
             :items="QAType"
             label="Quality Assurance type"
+            :color="teamColor"
             item-text="name"
           />
           <v-slider
@@ -77,6 +79,8 @@
             :color="teamColor"
             :thumb-color="teamColor"
             :thumb-size="24"
+            :track-color="'teamColor'+'lighten-3'"
+            :track-fill-color="teamColor"
           >
             <template v-slot:append>
               <v-text-field
@@ -101,6 +105,8 @@
             :min="1"
             :max="100"
             thumb-label="always"
+            :track-color="'teamColor'+'lighten-3'"
+            :track-fill-color="teamColor" 
           >
             <template v-slot:append>
               <v-text-field
@@ -152,7 +158,7 @@
 
         <v-card>
           <v-card-text>
-            Are you sure you want to confirm changes?
+            <br> Are you sure you want to confirm changes?
           </v-card-text>
           <v-divider />
           <v-card-actions>
@@ -165,10 +171,10 @@
                 confirmChanges();
               "
             >
-              Accept
+             <b>Accept</b>
             </v-btn>
             <v-btn color="red" text @click="confirmChangesDialog = false">
-              Declaine
+             <b>Decline</b>
             </v-btn>
           </v-card-actions>
         </v-card>

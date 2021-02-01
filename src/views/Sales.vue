@@ -25,12 +25,13 @@
       :maxProdCapac="'Incomplete'"
       :overDemand="40000.0"
       style="height: 500px;"
+      :teamColor="teamColor"
     />
 
     <v-divider />
 
     <!-- Managing sales process -->
-    <v-tabs v-model="salesTabs" centered>
+    <v-tabs v-model="salesTabs" :color="teamColor" centered>
       <v-tab>
         Manage Sales Activities
       </v-tab>
@@ -48,6 +49,7 @@
               v-model="selectedSalesActivities"
               :items="salesActivities"
               label="Additional sales activities"
+              :color="teamColor"
               item-text="name"
             />
 
@@ -63,6 +65,8 @@
               :color="teamColor"
               :thumb-color="teamColor"
               :thumb-size="24"
+              :track-color="'teamColor'+'lighten-3'"
+              :track-fill-color="teamColor"
             >
               <template v-slot:append>
                 <v-text-field
@@ -111,18 +115,21 @@
               type="number"
               min="0"
               v-model="standardPrice"
+              :color="teamColor"
             />
             <v-text-field
               label="Standard Pro"
               type="number"
               min="0"
               v-model="standardProPrice"
+              :color="teamColor"
             />
             <v-text-field
               label="Premium"
               type="number"
               min="0"
               v-model="premiumPrice"
+              :color="teamColor"
             />
           </v-col>
         </v-row>
@@ -142,7 +149,7 @@
 
       <v-card>
         <v-card-text>
-          Are you sure you want to confirm changes?
+        <br>  Are you sure you want to confirm changes?
         </v-card-text>
         <v-divider />
         <v-card-actions>
@@ -158,7 +165,7 @@
             Accept
           </v-btn>
           <v-btn color="red" text @click="confirmChangesDialog = false">
-            Declaine
+            Decline
           </v-btn>
         </v-card-actions>
       </v-card>

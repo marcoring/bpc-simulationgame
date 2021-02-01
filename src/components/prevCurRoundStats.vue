@@ -5,7 +5,7 @@
       <v-col>
         <!-- Previous Round Status -->
         <v-card style="height:100%">
-          <v-card-title>
+          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
             Previous Round
           </v-card-title>
           <v-card-text>
@@ -24,7 +24,7 @@
       <v-col>
         <!-- Current Round Status -->
         <v-card style="height:100%">
-          <v-card-title>
+          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
             Current Round
           </v-card-title>
           <v-card-text>
@@ -43,6 +43,7 @@
       <v-col>
         <!-- Cost Accounting -->
         <cost-accounting-card
+          :teamColor="teamColor"
           style="height:100%"
           :budget="budget"
           :runningCosts="runningCosts"
@@ -62,6 +63,7 @@ export default {
   name: "prev-cur-round-stats",
   components: { costAccountingCard },
   props: {
+    teamColor: String,
     prevAsmLine: {
       type: String,
       default: "",

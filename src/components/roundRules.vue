@@ -1,6 +1,6 @@
 <template>
   <v-card id="roundRulesCard">
-    <v-card-title class="headline grey lighten-2">
+    <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
       Round {{ round }}
 
       <v-spacer />
@@ -15,12 +15,12 @@
     <!-- Round Rules -->
     <v-card-text>
       <div v-if="generalRules">
-        <h3>General Rules:</h3>
+        <h3><br>General Rules:</h3>
         <p>{{ rules.generalRules }}</p>
       </div>
 
       <div>
-        <h4>Round {{ round }} rules:</h4>
+        <br><h2>Rules</h2><br>
         <p>{{ findRoundRules }}</p>
         <ul>
           <li v-for="item in findRoundKeywords" :key="item">
@@ -116,6 +116,7 @@ export default {
     },
   },
   props: {
+    teamColor: String,
     round: Number,
     generalRules: Boolean,
     headerImage: Boolean,
