@@ -8,12 +8,13 @@
         permanent
         expand-on-hover
         fixed
+        :color="teamColor"
       >
         <v-list-item to="dashboard">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon style="color:white">mdi-home</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Dashboard</v-list-item-title>
+          <v-list-item-title style="color:white">Dashboard</v-list-item-title>
         </v-list-item>
 
         <v-divider />
@@ -31,9 +32,9 @@
             :to="element.id"
           >
             <v-list-item-icon>
-              <v-icon>{{ element.icon }}</v-icon>
+              <v-icon style="color:white">{{ element.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>{{ element.name }}</v-list-item-title>
+            <v-list-item-title style="color:white">{{ element.name }}</v-list-item-title>
           </v-list-item>
         </v-list>
 
@@ -41,9 +42,9 @@
 
         <v-list-item @click="rulesDialog = true">
           <v-list-item-icon>
-            <v-icon>mdi-help-circle-outline</v-icon>
+            <v-icon style="color:white">mdi-help-circle-outline</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Round Rules</v-list-item-title>
+          <v-list-item-title style="color:white">Round Rules</v-list-item-title>
         </v-list-item>
       </v-navigation-drawer>
 
@@ -54,8 +55,8 @@
       >
         <v-col class="d-flex flex-column justify-start align-start">
           <h1>{{ currentRouteName }}</h1>
-          <h3>{{ teamName }}</h3>
-          <h3>{{ teamColor }}</h3>
+          <h3><b>Team Name: </b> {{ teamName }}</h3>
+          <h3><b>Team Color: </b>{{ teamColor }}</h3> 
         </v-col>
 
         <v-col class="d-flex justify-center align-center">

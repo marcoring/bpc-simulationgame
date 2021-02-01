@@ -28,7 +28,7 @@
             Accept
           </v-btn>
           <v-btn color="red" text @click="confirmChangesDialog = false">
-            Declaine
+            Decline
           </v-btn>
         </v-card-actions>
       </v-card>

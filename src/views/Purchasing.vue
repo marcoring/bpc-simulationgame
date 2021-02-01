@@ -1,5 +1,5 @@
 <template>
-  <v-container id="purchaising">
+  <v-container id="purchasing">
     <!-- Statistic about current and previous round -->
     <v-row>
       <v-col>
