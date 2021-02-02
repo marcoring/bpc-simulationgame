@@ -34,7 +34,9 @@
             <v-list-item-icon>
               <v-icon style="color:white">{{ element.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title style="color:white">{{ element.name }}</v-list-item-title>
+            <v-list-item-title style="color:white">{{
+              element.name
+            }}</v-list-item-title>
           </v-list-item>
         </v-list>
 
@@ -56,7 +58,12 @@
         <v-col class="d-flex flex-column justify-start align-start">
           <h1>{{ currentRouteName }}</h1>
           <h3><b>Team Name: </b> {{ teamName }}</h3>
-          <h3 :style="'background-color:' + teamColor +'!important'" style="color: white"><b> Team Color:  </b>{{ teamColor }}</h3> 
+          <h3
+            :style="'background-color:' + teamColor + '!important'"
+            style="color: white"
+          >
+            <b> Team Color: </b>{{ teamColor }}
+          </h3>
         </v-col>
 
         <v-col class="d-flex justify-center align-center">
@@ -99,7 +106,7 @@
               </v-card-title>
 
               <v-card-text>
-                <br>
+                <br />
                 <p>Do you really want to end the current round?</p>
                 <p>
                   You won't be able to make any changes until the next round has
@@ -116,7 +123,7 @@
                   text
                   @click="endRoundDialog = false"
                 >
-                  <b>Back</b> 
+                  <b>Back</b>
                 </v-btn>
 
                 <v-btn
@@ -154,7 +161,6 @@
       <v-dialog
         v-if="!(currentRouteName === 'LandingPage')"
         v-model="rulesDialog"
-
         persistent
         width="80%"
       >
@@ -162,7 +168,12 @@
 
         <v-card>
           <!-- Round Rules -->
-          <roundRules :teamColor="teamColor" :generalRules="true" :headerImage="true" :round="round" />
+          <roundRules
+            :teamColor="teamColor"
+            :generalRules="true"
+            :headerImage="true"
+            :round="round"
+          />
 
           <v-divider />
 
@@ -185,7 +196,10 @@
           </v-card-title>
 
           <v-card-text>
-            <h2> <br> © Technical University Munich (TUM) 2021</h2>
+            <h2>
+              <br />
+              © Technical University Munich (TUM) 2021
+            </h2>
           </v-card-text>
 
           <v-divider />
@@ -204,7 +218,7 @@
 
 <script>
 import roundRules from "./components/roundRules.vue";
-//import axios from "axios";
+import axios from "axios";
 export default {
   name: "App",
   components: { roundRules },
@@ -436,13 +450,13 @@ export default {
     console.log("mounted");
     this.newRoundRules();
 
-    // axios
-    //   .get(
-    //     "http://s06lp1.ucc.in.tum.de:8000/sap/opu/odata/sap/Z_ITBL_WS2020_SRV/"
-    //   )
-    //   .then((response) => (this.info = response));
+    axios
+      .get(
+        "http://s06lp1.ucc.in.tum.de:8000/sap/opu/odata/sap/Z_ITBL_WS2020_SRV/"
+      )
+      .then((response) => (this.info = response));
 
-    // console.log(this.info);
+    console.log(this.info);
   },
 };
 </script>
