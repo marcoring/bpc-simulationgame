@@ -6,7 +6,10 @@
         <v-col>
           <!-- Previous Round Status -->
           <v-card style="height:100%">
-            <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
+            <v-card-title
+              :style="'background-color:' + teamColor + '!important'"
+              style="color: white"
+            >
               Previous Round
             </v-card-title>
             <v-card-text>
@@ -22,7 +25,10 @@
         <v-col>
           <!-- Current Round Status -->
           <v-card style="height:100%">
-            <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
+            <v-card-title
+              :style="'background-color:' + teamColor + '!important'"
+              style="color: white"
+            >
               Current Round
             </v-card-title>
             <v-card-text>
@@ -79,7 +85,7 @@
             :color="teamColor"
             :thumb-color="teamColor"
             :thumb-size="24"
-            :track-color="'teamColor'+'lighten-3'"
+            :track-color="'teamColor' + 'lighten-3'"
             :track-fill-color="teamColor"
           >
             <template v-slot:append>
@@ -105,8 +111,8 @@
             :min="1"
             :max="100"
             thumb-label="always"
-            :track-color="'teamColor'+'lighten-3'"
-            :track-fill-color="teamColor" 
+            :track-color="'teamColor' + 'lighten-3'"
+            :track-fill-color="teamColor"
           >
             <template v-slot:append>
               <v-text-field
@@ -126,19 +132,19 @@
         <v-col>
           <v-text-field
             label="Base salary (EUR)"
-            v-model="selectedQAType[0]"
+            :value="calculateCosts(selectedQAType[0])"
             filled
             disabled
           />
           <v-text-field
             label="Cost per year (EUR)"
-            v-model="selectedQAType[1]"
+            :value="calculateCosts(selectedQAType[1])"
             filled
             disabled
           />
           <v-text-field
             label="QA Capacity (PC)"
-            v-model="selectedQAType[2]"
+            :value="calculateCosts(selectedQAType[2])"
             filled
             disabled
           />
@@ -158,7 +164,8 @@
 
         <v-card>
           <v-card-text>
-            <br> Are you sure you want to confirm changes?
+            <br />
+            Are you sure you want to confirm changes?
           </v-card-text>
           <v-divider />
           <v-card-actions>
@@ -171,10 +178,10 @@
                 confirmChanges();
               "
             >
-             <b>Accept</b>
+              <b>Accept</b>
             </v-btn>
             <v-btn color="red" text @click="confirmChangesDialog = false">
-             <b>Decline</b>
+              <b>Decline</b>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -198,11 +205,11 @@ export default {
       QAType: [
         {
           name: "QA-Type 1",
-          value: ["40400", "543218", "80"],
+          value: ["4040", "543218", "80"],
         },
         {
           name: "QA-Type 2",
-          value: ["70600", "345180", "124"],
+          value: ["7060", "345180", "124"],
         },
       ],
       numOfEmpl: 1,
@@ -215,6 +222,18 @@ export default {
       console.log("redirect to Dashboard");
       this.$emit("updateProgress", "qualityAssurance", 100);
       this.$router.push({ path: "/dashboard" });
+    },
+    calculateCosts(selectedQAType) {
+      // check for NaN
+      if (typeof selectedQAType === "undefined") {
+        return "";
+      } else {
+        return (
+          selectedQAType *
+          this.numOfEmpl *
+          (1 + this.quality.val / 100)
+        ).toFixed(2);
+      }
     },
   },
   props: {

@@ -1,6 +1,9 @@
 <template>
   <v-card id="roundRulesCard">
-    <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
+    <v-card-title
+      :style="'background-color:' + teamColor + '!important'"
+      style="color: white"
+    >
       Round {{ round }}
 
       <v-spacer />
@@ -15,12 +18,14 @@
     <!-- Round Rules -->
     <v-card-text>
       <div v-if="generalRules">
-        <h3><br>General Rules:</h3>
+        <h3><br />General Rules:</h3>
         <p>{{ rules.generalRules }}</p>
       </div>
 
       <div>
-        <br><h2>Rules</h2><br>
+        <br />
+        <h2>Rules</h2>
+        <br />
         <p>{{ findRoundRules }}</p>
         <ul>
           <li v-for="item in findRoundKeywords" :key="item">

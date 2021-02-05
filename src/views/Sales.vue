@@ -65,7 +65,7 @@
               :color="teamColor"
               :thumb-color="teamColor"
               :thumb-size="24"
-              :track-color="'teamColor'+'lighten-3'"
+              :track-color="'teamColor' + 'lighten-3'"
               :track-fill-color="teamColor"
             >
               <template v-slot:append>
@@ -86,19 +86,19 @@
           <v-col>
             <v-text-field
               label="Base salary (EUR)"
-              v-model="selectedSalesActivities[0]"
+              :value="calculateCosts(selectedSalesActivities[0])"
               filled
               disabled
             />
             <v-text-field
               label="Sales Cost (EUR)"
-              v-model="selectedSalesActivities[1]"
+              :value="calculateCosts(selectedSalesActivities[1])"
               filled
               disabled
             />
             <v-text-field
               label="Sales Capacity (PC)"
-              v-model="selectedSalesActivities[2]"
+              :value="calculateCosts(selectedSalesActivities[2])"
               filled
               disabled
             />
@@ -149,7 +149,8 @@
 
       <v-card>
         <v-card-text>
-        <br>  Are you sure you want to confirm changes?
+          <br />
+          Are you sure you want to confirm changes?
         </v-card-text>
         <v-divider />
         <v-card-actions>
@@ -209,6 +210,14 @@ export default {
       console.log("redirect to Dashboard");
       this.$emit("updateProgress", "sales", 100);
       this.$router.push({ path: "/dashboard" });
+    },
+    calculateCosts(selectedSalesActivities) {
+      // check for NaN
+      if (typeof selectedSalesActivities === "undefined") {
+        return "";
+      } else {
+        return (selectedSalesActivities * this.numOfSalesPers).toFixed(2);
+      }
     },
   },
   props: {

@@ -31,16 +31,6 @@
         <v-container fluid>
           <v-row align="center" justify="center">
             <v-col cols="12" sm="6" md="4">
-              <!--<v-select
-                v-model="teamColor"
-                :items="items"
-                label="Choose TEAM COLOR ..."
-                :rules="[(v) => !!v || 'Color is required']"
-                required
-                solo
-                dense
-              >
-              </v-select>-->
               <v-color-picker
                 class="mx-auto"
                 required
@@ -71,7 +61,6 @@ export default {
   data: () => ({
     teamName: "",
     teamColor: "#4E9356",
-    items: ["Red", "Blue", "Green", "Orange"],
     valid: true,
     rules: {
       required: (value) => !!value || "Required!",

@@ -62,7 +62,7 @@
             :style="'background-color:' + teamColor + '!important'"
             style="color: white"
           >
-            <b> Team Color: </b>{{ teamColor }}
+            <b> Team Code: </b>{{ teamColor }}
           </h3>
         </v-col>
 
@@ -218,7 +218,7 @@
 
 <script>
 import roundRules from "./components/roundRules.vue";
-import axios from "axios";
+//import axios from "axios";
 export default {
   name: "App",
   components: { roundRules },
@@ -450,13 +450,13 @@ export default {
     console.log("mounted");
     this.newRoundRules();
 
-    axios
-      .get(
-        "http://s06lp1.ucc.in.tum.de:8000/sap/opu/odata/sap/Z_ITBL_WS2020_SRV/"
-      )
-      .then((response) => (this.info = response));
+    // axios
+    //   .get(
+    //     "http://s06lp1.ucc.in.tum.de:8000/sap/opu/odata/sap/Z_ITBL_WS2020_SRV/"
+    //   )
+    //   .then((response) => (this.info = response));
 
-    console.log(this.info);
+    // console.log(this.info);
   },
 };
 </script>
