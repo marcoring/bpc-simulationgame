@@ -5,7 +5,10 @@
       <v-col>
         <!-- Previous Round Data -->
         <v-card>
-          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
+          <v-card-title
+            :style="'background-color:' + teamColor + '!important'"
+            style="color: white"
+          >
             Previous Round Data
             <v-spacer />
             <v-text-field
@@ -28,7 +31,10 @@
       <v-col>
         <!-- Current Round Data -->
         <v-card>
-          <v-card-title :style="'background-color:' + teamColor +'!important'" style="color: white">
+          <v-card-title
+            :style="'background-color:' + teamColor + '!important'"
+            style="color: white"
+          >
             Current Round Data
             <v-spacer />
             <v-text-field
@@ -57,7 +63,13 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-select :items="vendors" :color="teamColor" label="Choose vendor..." />
+        <v-select
+          v-model="selectedVendor"
+          :items="vendors"
+          :color="teamColor"
+          label="Choose vendor..."
+          item-text="name"
+        />
         <v-slider
           v-model="quality.val"
           :label="quality.label"
@@ -66,12 +78,82 @@
           :max="100"
           :thumb-color="teamColor"
           thumb-label="always"
-          :track-color="'teamColor'+'lighten-3'"
+          :track-color="'teamColor' + 'lighten-3'"
           :track-fill-color="teamColor"
         >
           <template v-slot:append>
             <v-text-field
               v-model="quality.val"
+              class="mt-0 pt-0"
+              hide-details
+              single-line
+              :min="1"
+              :thumb-size="24"
+              :max="100"
+              type="number"
+              style="width: 60px"
+            />
+          </template>
+        </v-slider>
+      </v-col>
+
+      <v-col>
+        <v-text-field
+          label="Frame: Cost per material (EUR)"
+          :value="calculateCostPerMaterial(selectedVendor[0])"
+          filled
+          disabled
+        />
+        <v-text-field
+          label="Sensors: Cost per material (EUR)"
+          :value="calculateCostPerMaterial(selectedVendor[1])"
+          filled
+          disabled
+        />
+      </v-col>
+
+      <v-col>
+        <v-slider
+          v-model="amount.frames"
+          label="Frames: Amount (PC)"
+          :color="teamColor"
+          :min="1"
+          :max="100"
+          :thumb-color="teamColor"
+          :thumb-size="24"
+          thumb-label="always"
+          :track-color="'teamColor' + 'lighten-3'"
+          :track-fill-color="teamColor"
+        >
+          <template v-slot:append>
+            <v-text-field
+              v-model="amount.frames"
+              class="mt-0 pt-0"
+              hide-details
+              single-line
+              :min="1"
+              :max="100"
+              type="number"
+              style="width: 60px"
+            />
+          </template>
+        </v-slider>
+
+        <v-slider
+          v-model="amount.sensors"
+          label="Sensor: Amount (PC)"
+          :color="teamColor"
+          :min="1"
+          :max="100"
+          :thumb-color="teamColor"
+          thumb-label="always"
+          :thumb-size="24"
+          :track-color="'teamColor' + 'lighten-3'"
+          :track-fill-color="teamColor"
+        >
+          <template v-slot:append>
+            <v-text-field
+              v-model="amount.sensors"
               class="mt-0 pt-0"
               hide-details
               single-line
@@ -85,7 +167,18 @@
       </v-col>
 
       <v-col>
-        <v-data-table :headers="headersPurchaising" :items="dataPurchaising" />
+        <v-text-field
+          label="Frame: Total cost (EUR)"
+          :value="calculateTotalCost(selectedVendor[0], amount.frames)"
+          filled
+          disabled
+        />
+        <v-text-field
+          label="Sensors: Total cost (EUR)"
+          :value="calculateTotalCost(selectedVendor[1], amount.sensors)"
+          filled
+          disabled
+        />
       </v-col>
     </v-row>
 
@@ -102,7 +195,8 @@
 
       <v-card>
         <v-card-text>
-         <br> Are you sure you want to confirm changes?
+          <br />
+          Are you sure you want to confirm changes?
         </v-card-text>
         <v-divider />
         <v-card-actions>
@@ -115,10 +209,10 @@
               confirmChanges();
             "
           >
-           <b>Accept</b>
+            <b>Accept</b>
           </v-btn>
           <v-btn color="red" text @click="confirmChangesDialog = false">
-           <b>Decline</b>
+            <b>Decline</b>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -132,39 +226,22 @@ export default {
   data() {
     return {
       confirmChangesDialog: false,
+      selectedVendor: "",
       vendors: [
-        "Bavaria eBike",
-        "Goldenmotor GmbH",
-        "ElectricRider",
-        "eBikesDE",
-      ],
-      quality: { label: "Quality (%)", val: 50, color: "primary" },
-      headersPurchaising: [
-        { text: "Material", value: "material" },
-        { text: "Cost per material (EUR)", value: "costPerMat" },
-        { text: "Amount (PC)", value: "amount" },
-        { text: "Total cost (EUR)", value: "totalCost" },
-      ],
-      dataPurchaising: [
         {
-          material: "Battery",
-          costPerMat: "500",
-          amount: "55",
-          totalCost: "27.500",
+          name: "Bavaria eBike",
+          value: ["242", "22"],
         },
         {
-          material: "Frame",
-          costPerMat: "100",
-          amount: "80",
-          totalCost: "8.000",
-        },
-        {
-          material: "Sensors",
-          costPerMat: "100",
-          amount: "80",
-          totalCost: "8.000",
+          name: "eBikesDE",
+          value: ["180", "14"],
         },
       ],
+      quality: { label: "Quality (%)", val: 50 },
+      amount: {
+        frames: { label: "Frame: Amount (PC)", val: 1 },
+        sensors: { label: "Sensor: Amount (PC)", val: 1 },
+      },
       searchPrevRound: "",
       searchCurRound: "",
       headersRound: [
@@ -219,6 +296,24 @@ export default {
       console.log("redirect to Dashboard");
       this.$emit("updateProgress", "purchasing", 100);
       this.$router.push({ path: "/dashboard" });
+    },
+    calculateCostPerMaterial(selectedVendor) {
+      // material * quality
+      if (typeof selectedVendor === "undefined") {
+        return "";
+      } else {
+        return (selectedVendor * (1 + this.quality.val / 100)).toFixed(2);
+      }
+    },
+    calculateTotalCost(selectedVendor, amount) {
+      // costPerMaterial * amount
+      if (typeof selectedVendor === "undefined") {
+        return "";
+      } else {
+        return (this.calculateCostPerMaterial(selectedVendor) * amount).toFixed(
+          2
+        );
+      }
     },
   },
   props: {
